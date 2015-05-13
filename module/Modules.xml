@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<Root>
+  <Module  name = "ElTorqiro_UltimateAbility"
+    movie       = "ElTorqiro_UltimateAbility\HUD.swf"
+    flags       = ""
+    depth_layer = "Middle"
+    sub_depth   = "2"
+    variable    = "ElTorqiro_UltimateAbility"
+    criteria    = "ElTorqiro_UltimateAbility &amp;&amp; (guimode &amp; (GUIMODEFLAGS_INPLAY | GUIMODEFLAGS_ENABLEALLGUI))"
+	config_name = "ElTorqiro_UltimateAbility_HUD_Data"	
+  />
+  <Module  name = "ElTorqiro_UltimateAbility_Config"
+    movie       = "ElTorqiro_UltimateAbility\Config.swf"
+    flags       = "GMF_DONT_UNLOAD"
+    depth_layer = "Top"
+    sub_depth   = "2"
+    variable    = "ElTorqiro_UltimateAbility_Config"
+    criteria    = "ElTorqiro_UltimateAbility_Config &amp;&amp; (guimode &amp; (GUIMODEFLAGS_INPLAY | GUIMODEFLAGS_ENABLEALLGUI))"
+    config_name = "ElTorqiro_UltimateAbility_Config_Data"
+  />
+</Root>
