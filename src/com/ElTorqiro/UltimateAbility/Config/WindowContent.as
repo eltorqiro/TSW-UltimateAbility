@@ -46,13 +46,13 @@ class com.ElTorqiro.UltimateAbility.Config.WindowContent extends com.Components.
 		m_Content = createEmptyMovieClip("m_Content", getNextHighestDepth() );
 
 		_uiControls.VisitForums = {
-			ui:	AddButton("VisitForums", "Visit the InCombat forum thread"),
-			tooltip: "Clicking this button will open the in-game browser and visit the InCombat forum thread.",
+			ui:	AddButton("VisitForums", "Visit the " + AddonInfo.Name + " forum thread"),
+			tooltip: "Clicking this button will open the in-game browser and visit the " + AddonInfo.ID + " forum thread.",
 			event:		"click",
 			context:	this,
 			fn: 		function(e:Object) {
 				DistributedValue.SetDValue("web_browser", false);
-				DistributedValue.SetDValue("WebBrowserStartURL", "https://forums.thesecretworld.com/showthread.php?86001-MOD-ElTorqiro_InCombat");
+				DistributedValue.SetDValue("WebBrowserStartURL", "https://forums.thesecretworld.com/showthread.php?86011-MOD-ElTorqiro_UltimateAbility");
 				DistributedValue.SetDValue("web_browser", true);
 			}
 		};
@@ -62,7 +62,7 @@ class com.ElTorqiro.UltimateAbility.Config.WindowContent extends com.Components.
 		AddHeading("Options");
 		_uiControls.hudEnabled = {
 			ui:	AddCheckbox( "hudEnabled", "HUD enabled" ),
-			tooltip: "Enables the InCombat HUD.  If enabled, the HUD will be visible on the screen when you are in combat.",
+			tooltip: "Enables the HUD.",
 			event:		"click",
 			context:	this,
 			fn: 		function(e:Object) {
@@ -73,8 +73,8 @@ class com.ElTorqiro.UltimateAbility.Config.WindowContent extends com.Components.
 			}
 		};
 		_uiControls.hideDefaultUI = {
-			ui:	AddCheckbox( "hideDefaultUI", "Hide default in-combat UI" ),
-			tooltip: "Hides the default in-combat indicator (i.e. the blurry yellow glow at the bottom of the screen).",
+			ui:	AddCheckbox( "hideDefaultUI", "Hide default Animus charge bar" ),
+			tooltip: "Hides the default Animus charge bar (above the ability bar).",
 			event:		"click",
 			context:	this,
 			fn: 		function(e:Object) {
@@ -85,125 +85,22 @@ class com.ElTorqiro.UltimateAbility.Config.WindowContent extends com.Components.
 			}
 		};
 
-		AddHeading("Bar");
-		_uiControls.showBar = {
-			ui:	AddCheckbox( "showBar", "Show bar" ),
-			tooltip: "Toggles the visibility of the HUD background bar.",
-			event:		"click",
-			context:	this,
-			fn: 		function(e:Object) {
-				_hud.showBar = e.target.selected;
-			},
-			init:		function(e:Object) {
-				e.control.ui.selected = _hud.showBar;
-			}
-		};
-		_uiControls.glowBar = {
-			ui:	AddCheckbox( "glowBar", "Glow bar" ),
-			tooltip: "Toggles the visibility of the glow on the background bar.",
-			event:		"click",
-			context:	this,
-			fn: 		function(e:Object) {
-				_hud.glowBar = e.target.selected;
-			},
-			init:		function(e:Object) {
-				e.control.ui.selected = _hud.glowBar;
-			}
-		};
-		_uiControls.barStyle = {
-			ui:	AddDropdown( "barStyle", "Bar Style", [ "Lights", "Stripe", "Dawn", "Hazard" ] ),
-			/* tooltip: "The style of bar used in the background of the HUD.", */
-			event:		"change",
-			context:	this,
-			fn: 		function(e:Object) {
-				_hud.barStyle = e.target.selectedIndex;
-			},
-			init:		function(e:Object) {
-				e.control.ui.selectedIndex = _hud.barStyle;
-			}
-		};
 		AddVerticalSpace(10);
-		_uiControls.barAlpha = {
-			ui:	AddSlider( "barAlpha", "Bar Transparency", 0, 100, 1, "%" ),
-			tooltip: "Adjusts transparency of the bar.",
-			event:		"change",
-			context:	this,
-			fn: 		function(e:Object) {
-				_hud.barAlpha = e.target.value;
-			},
-			init:		function(e:Object) {
-				e.control.ui.setValue( _hud.barAlpha );
-			}
-		};
-		_uiControls.barScaleX = {
-			ui:	AddSlider( "barScaleX", "Horizontal Scale", _hud.minHUDScale, _hud.maxHUDScale, 1, "%" ),
-			tooltip: "Adjusts the horizontal scale of the bar.",
-			event:		"change",
-			context:	this,
-			fn: 		function(e:Object) {
-				_hud.barScaleX = e.target.value;
-			},
-			init:		function(e:Object) {
-				e.control.ui.setValue( _hud.barScaleX );
-			}
-		};
-		_uiControls.barScaleY = {
-			ui:	AddSlider( "barScaleY", "Vertical Scale", _hud.minHUDScale, _hud.maxHUDScale, 1, "%" ),
-			tooltip: "Adjusts the vertical scale of the bar.",
-			event:		"change",
-			context:	this,
-			fn: 		function(e:Object) {
-				_hud.barScaleY = e.target.value;
-			},
-			init:		function(e:Object) {
-				e.control.ui.setValue( _hud.barScaleY );
-			}
-		};
-		
-		
-		// icons section
-		AddHeading("Icons");
-		_uiControls.showIcons = {
-			ui:	AddCheckbox( "showIcons", "Show icon" ),
-			tooltip: "Toggles the visibility of the HUD icon images.",
+		_uiControls.glowWhenFull = {
+			ui:	AddCheckbox( "glowWhenFull", "Glow when at full Animus charge" ),
+			tooltip: "Toggles the visibility of the glow effect when at full Animus charge.",
 			event:		"click",
 			context:	this,
 			fn: 		function(e:Object) {
-				_hud.showIcons = e.target.selected;
+				_hud.glowWhenFull = e.target.selected;
 			},
 			init:		function(e:Object) {
-				e.control.ui.selected = _hud.showIcons;
-			}
-		};
-		
-		AddVerticalSpace(10);
-		_uiControls.iconAlpha = {
-			ui:	AddSlider( "iconAlpha", "Icon Transparency", 0, 100, 1, "%" ),
-			tooltip: "Adjusts transparency of the icons.",
-			event:		"change",
-			context:	this,
-			fn: 		function(e:Object) {
-				_hud.iconAlpha = e.target.value;
-			},
-			init:		function(e:Object) {
-				e.control.ui.setValue( _hud.iconAlpha );
-			}
-		};
-		_uiControls.iconScale = {
-			ui:	AddSlider( "iconScale", "Icon Scale", _hud.minHUDScale, _hud.maxHUDScale, 1, "%" ),
-			tooltip: "Adjusts the size of the icons.",
-			event:		"change",
-			context:	this,
-			fn: 		function(e:Object) {
-				_hud.iconScale = e.target.value;
-			},
-			init:		function(e:Object) {
-				e.control.ui.setValue( _hud.iconScale );
+				e.control.ui.selected = _hud.glowWhenFull;
 			}
 		};
 
-
-		AddHeading("Overall HUD");
+		
+		AddHeading("Position, Scale & Transparency");
 		_uiControls.MoveToDefaultPosition = {
 			ui:	AddButton("MoveToDefaultPosition", "Reset to default position"),
 			tooltip: "Resets the HUD to its default position.",
@@ -240,50 +137,6 @@ class com.ElTorqiro.UltimateAbility.Config.WindowContent extends com.Components.
 		};
 		
 		
-		AddColumn();
-
-		// fx section
-		AddHeading( "Animations" );
-/*
-		_uiControls.animationTime = {
-			ui:	AddSlider( "animationTime", "Animation time", 0, 2000, 10, "ms" ),
-			tooltip: "The time taken to animate the HUD into position when activating/deactivating.",
-			event:		"change",
-			context:	this,
-			fn: 		function(e:Object) {
-				_hud.animationTime = e.target.value;
-			},
-			init:		function(e:Object) {
-				e.control.ui.setValue( _hud.animationTime );
-			}
-		};
-*/
-		_uiControls.fadeInTime = {
-			ui:	AddSlider( "fadeInTime", "Fade in time", 0, 2000, 10, "ms" ),
-			tooltip: "The fade in time for HUD transitions.",
-			event:		"change",
-			context:	this,
-			fn: 		function(e:Object) {
-				_hud.fadeInTime = e.target.value;
-			},
-			init:		function(e:Object) {
-				e.control.ui.setValue( _hud.fadeInTime );
-			}
-		};
-		_uiControls.fadeOutTime = {
-			ui:	AddSlider( "fadeOutTime", "Fade out time", 0, 2000, 10, "ms" ),
-			tooltip: "The fade out time for HUD transitions.",
-			event:		"change",
-			context:	this,
-			fn: 		function(e:Object) {
-				_hud.fadeOutTime = e.target.value;
-			},
-			init:		function(e:Object) {
-				e.control.ui.setValue( _hud.fadeOutTime );
-			}
-		};
-		
-
 		// tints section
 		AddHeading( "Tints" );
 		_uiControls.ApplyDefaultTints = {
@@ -296,64 +149,19 @@ class com.ElTorqiro.UltimateAbility.Config.WindowContent extends com.Components.
 				LoadValues();
 			}
 		};
-		_uiControls.tintThreatened = {
-			ui:	AddTextInput( "tintThreatened", "Threatened", "", 6, true, undefined, true ),
+		_uiControls.tintGlow= {
+			ui:	AddTextInput( "tintFullGlow", "Full Animus Glow", "", 6, true, undefined, true ),
 			event:		"textChange",
 			context:	this,
 			fn: 		function(e:Object) {
 				var eventValue:Number = parseInt( '0x' + e.target.text );
-				if ( AddonUtils.isRGB(eventValue) ) _hud.tintThreatened = eventValue;
+				if ( AddonUtils.isRGB(eventValue) ) _hud.tintFullGlow = eventValue;
 			},
 			init:		function(e:Object) {
-				var displayString:String = decColor2hex(_hud.tintThreatened);
+				var displayString:String = decColor2hex(_hud.tintFullGlow);
 				if ( e.control.ui.text != displayString ) e.control.ui.text = displayString;
 			}
 		};
-		_uiControls.tintCombat = {
-			ui:	AddTextInput( "tintCombat", "Combat", "", 6, true, undefined, true ),
-			event:		"textChange",
-			context:	this,
-			fn: 		function(e:Object) {
-				var eventValue:Number = parseInt( '0x' + e.target.text );
-				if ( AddonUtils.isRGB(eventValue) ) _hud.tintCombat = eventValue;
-			},
-			init:		function(e:Object) {
-				var displayString:String = decColor2hex(_hud.tintCombat);
-				if ( e.control.ui.text != displayString ) e.control.ui.text = displayString;
-			}
-		};
-		
-		AddHeading("Custom Icons");
-		_uiControls.useCustomIcons = {
-			ui:	AddCheckbox( "useCustomIcons", "Use custom icons (read below)" ),
-			tooltip: "Enables the use of your own custom icons.  If an icon cannot be loaded, an <i>error</i> icon will be shown instead.",
-			event:		"click",
-			context:	this,
-			fn: 		function(e:Object) {
-				_hud.useCustomIcons = e.target.selected;
-			},
-			init:		function(e:Object) {
-				e.control.ui.selected = _hud.useCustomIcons;
-			}
-		};
-		AddIndent(20);
-		_uiControls.ReloadCustomIcons = {
-			ui:	AddButton("ReloadCustomIcons", "Reload custom icons"),
-			tooltip: "Reloads the custom icons from disk, allowing you to make quick changes to them without having to restart the game.",
-			event:		"click",
-			context:	this,
-			fn: 		function(e:Object) {
-				_hud.LoadIcons();
-			}
-		};
-		AddIndent(-20);
-
-		AddVerticalSpace(10);
-		AddTextArea( "customIconDescription", 
-			"You can use your own custom icons for the <b>Threatened</b> and <b>Combat</b> states.  They must be in PNG format and must be placed in the <b>" + AddonInfo.ID + "</b> directory.<br><br>The filenames are case sensitive:<br><br><b>threatened.png</b> - mobs are hunting you<br><b>combat.png</b> - you are engaged in combat"
-		);
-		
-		AddVerticalSpace(10);
 		
 		// global reset section
 		AddHeading("Global Reset");

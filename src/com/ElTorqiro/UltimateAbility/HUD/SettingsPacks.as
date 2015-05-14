@@ -22,23 +22,12 @@ class com.ElTorqiro.UltimateAbility.HUD.SettingsPacks {
 			
 			hideDefaultUI: true,
 
-			animationTime: 300,
 			fadeInTime: 1000,
 			fadeOutTime: 1000,
 			
-			showBar: true,
-			glowBar: true,
-			barStyle: 0,
-			showIcons: true,
+			glowWhenFull: true,
 			useCustomIcons: false,
 
-			iconScale: 100,
-			iconAlpha: 100,
-			
-			barScaleX: 100,
-			barScaleY: 100,
-			barAlpha: 100,
-			
 			hudScale: 100,
 			hudAlpha: 100,
 			
@@ -47,8 +36,7 @@ class com.ElTorqiro.UltimateAbility.HUD.SettingsPacks {
 			
 			position: undefined,
 			
-			tintThreatened: 0xffd200,
-			tintCombat: 0xff9000
+			tintFullGlow: 0xfff733
 		});
 	}
 	
