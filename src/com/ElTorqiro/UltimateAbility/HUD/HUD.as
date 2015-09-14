@@ -90,7 +90,9 @@ class com.ElTorqiro.UltimateAbility.HUD.HUD extends UIComponent {
 				Shortcut.UseShortcut( e_UltimateShortcutSlot );
 			}
 		});
-
+		
+		m_Ultimate.t_Hotkey.textAutoSize = "shrink";
+		
 		// tooltip show/hide
 		m_Ultimate.onRollOver = Delegate.create( this, OpenTooltip );
 		m_Ultimate.onRollOut = Delegate.create( this, CloseTooltip );
@@ -208,6 +210,9 @@ class com.ElTorqiro.UltimateAbility.HUD.HUD extends UIComponent {
 			return;
 		}
 
+		DistributedValue.Create( "ShowAnimaEnergyBar" );
+		DistributedValue.SetDValue( "ShowAnimaEnergyBar", !hide );
+		
 		// if we reached this far, reset thrash
 		_global.clearTimeout( _findElementTimers["defaultProgress"].timeoutID );
 		_findElementTimers["defaultProgress"] = undefined;
@@ -595,7 +600,7 @@ class com.ElTorqiro.UltimateAbility.HUD.HUD extends UIComponent {
 		
 		if ( raw <= 0 ) return 0;
 		else if ( raw >= 100 ) return 100;
-		else return raw;
+		else return Math.floor( raw * 100) / 100;
 	}
 	
 	public function get animaEnergyFull() : Boolean {
