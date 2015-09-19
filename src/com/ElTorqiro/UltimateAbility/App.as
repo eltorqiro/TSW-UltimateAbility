@@ -49,7 +49,7 @@ class com.ElTorqiro.UltimateAbility.App {
 	
 		// attach hud
 		hudMovie = hostMovie.attachMovie( "HUD", "m_HUD", hostMovie.getNextHighestDepth() );
-		LoreBase.SignalTagAdded.Disconnect( loreTagAddedHandler );
+		LoreBase.SignalTagAdded.Connect( loreTagAddedHandler );
 		
 		// listen for GUI edit mode signal, to retain state so the HUD can use it even if the HUD is not enabled when the signal is emitted
 		GlobalSignal.SignalSetGUIEditMode.Connect( guiEditModeChangeHandler );
