@@ -1,3 +1,16 @@
+1.0.0 -- 2015-09-20
+
+ + icon is now colourised depending on which Ultimate Ability your character has received (gold / blue / purple)
+ + glow effect now has a user configurable intensity level, and is optional
+ + app is now fully integrated with the game's GUI Edit Mode
+ + added hook for ElTorqiro_AegisHUD to know if default Animus charge bar is hidden
+ 
+ * changed app icon to be simpler and less "scrappy" when in VTIO
+ * updated config window to new style
+
+ - removed ability to "disable" the hud with right-click on the app icon; unlike some other addons, it made no sense to be able to toggle this on/off
+  
+  
 0.1.0 alpha -- 2015-05-14
 
  + initial release

@@ -2,8 +2,6 @@
 
 <Root>
   <Value name="ElTorqiro_UltimateAbility" value="true" />
-  <Value name="ElTorqiro_UltimateAbility_Config" value="true" />
-  <Value name="ElTorqiro_UltimateAbility_ShowConfig" value="false" />
-  <Archive name="ElTorqiro_UltimateAbility_HUD_Data" />
-  <Archive name="ElTorqiro_UltimateAbility_Config_Data" />
+  <Value name="ElTorqiro_UltimateAbility_Debug" value="false" />
+  <Archive name="ElTorqiro_UltimateAbility_Preferences" />
 </Root>
