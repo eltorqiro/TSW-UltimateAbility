@@ -339,17 +339,16 @@ class com.ElTorqiro.UltimateAbility.App {
 	 */
 	private static function guiEditModeChangeHandler( edit:Boolean ) : Void {
 		
-		if ( guiEditMode != edit ) {
+		if ( guiEditMode == edit ) return;
 		
-			var hudClipIndex:Number = SFClipLoader.GetClipIndex( hostMovie );
-			var subDepth:Number = edit ? Const.HudClipSubDepthGuiEditMode : Const.HudClipSubDepth;
-			
-			SFClipLoader.SetClipLayer( hudClipIndex, Const.HudClipDepthLayer, subDepth );
+		var hudClipIndex:Number = SFClipLoader.GetClipIndex( hostMovie );
+		var subDepth:Number = edit ? Const.HudClipSubDepthGuiEditMode : Const.HudClipSubDepth;
+		
+		SFClipLoader.SetClipLayer( hudClipIndex, Const.HudClipDepthLayer, subDepth );
 
-			_guiEditMode = edit;
-		
-			manageVisibility();
-		}
+		_guiEditMode = edit;
+	
+		manageVisibility();
 	}
 	
 	/**
