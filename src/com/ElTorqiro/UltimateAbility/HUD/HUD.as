@@ -76,10 +76,12 @@ class com.ElTorqiro.UltimateAbility.HUD.HUD extends UIComponent {
 	 */
 	public function manageGuiEditMode( edit:Boolean ) : Void {
 	
-		if ( edit && !gemController ) {
-			gemController = GemController( _parent.attachMovie( "GemController", "m_GuiEditModeController", _parent.getNextHighestDepth(), { targets: this } ) );
-			gemController.addEventListener( "scrollWheel", this, "scrollWheelHandler" );
-			gemController.addEventListener( "endDrag", this, "endDragHandler" );
+		if ( edit ) {
+			if ( !gemController ) {
+				gemController = GemController( _parent.attachMovie( "GemController", "m_GuiEditModeController", _parent.getNextHighestDepth(), { targets: this } ) );
+				gemController.addEventListener( "scrollWheel", this, "scrollWheelHandler" );
+				gemController.addEventListener( "endDrag", this, "endDragHandler" );
+			}
 		}
 		
 		else {
