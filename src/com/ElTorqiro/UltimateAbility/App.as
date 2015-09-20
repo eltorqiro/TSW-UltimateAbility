@@ -13,6 +13,8 @@ import com.ElTorqiro.UltimateAbility.Const;
 import com.ElTorqiro.UltimateAbility.AddonUtils.Preferences;
 import com.ElTorqiro.UltimateAbility.AddonUtils.VTIOConnector;
 import com.ElTorqiro.UltimateAbility.AddonUtils.CommonUtils;
+import com.ElTorqiro.UltimateAbility.AddonUtils.MovieClipHelper;
+import com.ElTorqiro.UltimateAbility.HUD.HUD;
 
 
 /**
@@ -43,12 +45,12 @@ class com.ElTorqiro.UltimateAbility.App {
 		// perform initial installation tasks
 		install();
 		
-		// attach widget
-		widgetClip = SFClipLoader.LoadClip( Const.WidgetClipPath, Const.AppID + "_Widget", false, Const.WidgetClipDepthLayer, Const.WidgetClipSubDepth, [] );
-		widgetClip.SignalLoaded.Connect( widgetLoaded );
+		// attach app icon
+		iconClip = SFClipLoader.LoadClip( Const.IconClipPath, Const.AppID + "_Icon", false, Const.IconClipDepthLayer, Const.IconClipSubDepth, [] );
+		iconClip.SignalLoaded.Connect( iconLoaded );
 	
 		// attach hud
-		hudMovie = hostMovie.attachMovie( "HUD", "m_HUD", hostMovie.getNextHighestDepth() );
+		hudMovie = HUD( MovieClipHelper.createMovieWithClass( HUD, "m_HUD", hostMovie, hostMovie.getNextHighestDepth() ) );
 		LoreBase.SignalTagAdded.Connect( loreTagAddedHandler );
 		
 		// listen for GUI edit mode signal, to retain state so the HUD can use it even if the HUD is not enabled when the signal is emitted
@@ -72,9 +74,9 @@ class com.ElTorqiro.UltimateAbility.App {
 		// stop listening for gui edit mode signal
 		GlobalSignal.SignalSetGUIEditMode.Disconnect( guiEditModeChangeHandler );
 		
-		// unload widget
-		SFClipLoader.UnloadClip( Const.AppID + "_Widget" );
-		widgetClip = null;
+		// unload icon
+		SFClipLoader.UnloadClip( Const.AppID + "_Icon" );
+		iconClip = null;
 
 		// unload hud
 		LoreBase.SignalTagAdded.Disconnect( loreTagAddedHandler );
@@ -99,7 +101,7 @@ class com.ElTorqiro.UltimateAbility.App {
 		_active = true;
 		
 		// component clip visibility
-		widgetClip.m_Movie._visible = true;
+		iconClip.m_Movie._visible = true;
 		manageVisibility();
 		
 		// manipulate default ui elements
@@ -131,7 +133,7 @@ class com.ElTorqiro.UltimateAbility.App {
 		manageDefaultUiAnimaEnergyBar();
 		
 		// component clip visibility
-		widgetClip.m_Movie._visible = false;
+		iconClip.m_Movie._visible = false;
 		manageVisibility();
 		
 		// save settings
@@ -151,8 +153,8 @@ class com.ElTorqiro.UltimateAbility.App {
 		prefs.add( "icon.position", undefined );
 		prefs.add( "icon.scale", 100,
 			function( newValue, oldValue ) {
-				var value:Number = Math.min( newValue, Const.MaxWidgetScale );
-				value = Math.max( value, Const.MinWidgetScale );
+				var value:Number = Math.min( newValue, Const.MaxIconScale );
+				value = Math.max( value, Const.MinIconScale );
 				
 				return value;
 			}
@@ -169,7 +171,20 @@ class com.ElTorqiro.UltimateAbility.App {
 		);
 
 		prefs.add( "defaultUI.animaEnergyBar.hide", true );
-		
+
+		prefs.add( "hud.hotkey.enable", true );
+		prefs.add( "hud.chargeNumber.enable", false );
+
+		prefs.add( "hud.chargingAnimaEnergy.meter.tint", true );
+		prefs.add( "hud.chargingAnimaEnergy.meter.transparency", 100,
+			function( newValue, oldValue ) {
+				var value:Number = Math.min( newValue, 100 );
+				value = Math.max( value, 0 );
+				
+				return value;
+			}
+		);
+
 		prefs.add( "hud.fullAnimaEnergy.glow.enable", true );
 		prefs.add( "hud.fullAnimaEnergy.glow.intensity", 80,
 			function( newValue, oldValue ) {
@@ -180,6 +195,25 @@ class com.ElTorqiro.UltimateAbility.App {
 			}
 		);
 		
+		prefs.add( "hud.fullAnimaEnergy.wings.transparency", 100,
+			function( newValue, oldValue ) {
+				var value:Number = Math.min( newValue, 100 );
+				value = Math.max( value, 0 );
+				
+				return value;
+			}
+		);
+
+		prefs.add( "hud.fullAnimaEnergy.meter.tint", true );
+		prefs.add( "hud.fullAnimaEnergy.meter.transparency", 100,
+			function( newValue, oldValue ) {
+				var value:Number = Math.min( newValue, 100 );
+				value = Math.max( value, 0 );
+				
+				return value;
+			}
+		);
+
 		prefs.add( "hud.tints.ophanim.blue", 			0x0088ff );
 		prefs.add( "hud.tints.ophanim.gold", 			0xffd700 );
 		prefs.add( "hud.tints.ophanim.purple", 			0x8800ff );
@@ -206,30 +240,31 @@ class com.ElTorqiro.UltimateAbility.App {
 	}
 	
 	/**
-	 * triggers updates that need to occur after the widget clip has been loaded
+	 * triggers updates that need to occur after the icon clip has been loaded
 	 * 
 	 * @param	clipNode
 	 * @param	success
 	 */
-	private static function widgetLoaded( clipNode:ClipNode, success:Boolean ) : Void {
-		debug("App: widget loaded: " + success);
+	private static function iconLoaded( clipNode:ClipNode, success:Boolean ) : Void {
+		debug("App: icon loaded: " + success);
 		
-		vtio = new VTIOConnector( Const.AppID, Const.AppAuthor, Const.AppVersion, Const.ShowConfigWindowDV, widgetClip.m_Movie.m_Icon, registeredWithVTIO );
+		vtio = new VTIOConnector( Const.AppID, Const.AppAuthor, Const.AppVersion, Const.ShowConfigWindowDV, iconClip.m_Movie.m_Icon, registeredWithVTIO );
 	}
 
 	/**
 	 * triggers updates that need to occur after the app has been registered with VTIO
-	 * e.g. updating the state of the widget icon copy that VTIO creates
+	 * e.g. updating the state of the icon copy that VTIO creates
 	 */
 	private static function registeredWithVTIO() : Void {
 
 		debug( "App: registered with VTIO" );
 		
 		// move clip to the depth required by VTIO icons
-		SFClipLoader.SetClipLayer( SFClipLoader.GetClipIndex( widgetClip.m_Movie ), VTIOConnector.e_VtioDepthLayer, VTIOConnector.e_VtioSubDepth );
+		SFClipLoader.SetClipLayer( SFClipLoader.GetClipIndex( iconClip.m_Movie ), VTIOConnector.e_VtioDepthLayer, VTIOConnector.e_VtioSubDepth );
 		
 		_isRegisteredWithVtio = true;
 		vtio = null;
+		
 	}
 	
 	/**
@@ -370,8 +405,8 @@ class com.ElTorqiro.UltimateAbility.App {
 	 */
 	
 	private static var hostMovie:MovieClip;
-	private static var hudMovie:MovieClip;
-	private static var widgetClip:ClipNode;
+	private static var hudMovie:HUD;
+	private static var iconClip:ClipNode;
 	private static var configWindowClip:ClipNode;
 	
 	private static var showConfigWindowMonitor:DistributedValue;

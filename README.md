@@ -6,6 +6,13 @@ An "Ultimate Ability" UI mod for the MMORPG "The Secret World"
 What is this?
 -------------
 ElTorqiro_UltimateAbility is a heads-up-display module for tracking the progress of Animus charge, and activating the Ultimate Ability.
+
+Major Features
+--------------
+* integrates an Animus charge meter into a newly designed Ultimate Ability button - the button "fills up" as you charge your Animus
+* option to hide the default in-game Animus charge bar
+* extensive cosmetic options for styling the button just how you want it
+
 Feedback, updates and community forum can be found at https://forums.thesecretworld.com/showthread.php?86011-MOD-ElTorqiro_UltimateAbility
    
    

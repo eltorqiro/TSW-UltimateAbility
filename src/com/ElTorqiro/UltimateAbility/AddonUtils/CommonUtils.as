@@ -157,7 +157,7 @@ class com.ElTorqiro.UltimateAbility.AddonUtils.CommonUtils {
 			enumPath = enumPaths.pop();
 		}
 
-		UtilsBase.PrintChatText("<br />");		
+		UtilsBase.PrintChatText("<br />");
 		UtilsBase.PrintChatText('Found <font color="#00ff00">' + foundCount + '</font> matching <font color="#00ccff">' + findText + '</font>');
 	}
 	

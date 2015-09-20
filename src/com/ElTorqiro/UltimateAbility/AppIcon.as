@@ -22,11 +22,13 @@ import com.GameInterface.UtilsBase;
  */
 class com.ElTorqiro.UltimateAbility.AppIcon extends MovieClip {
 	
+	public static var __className:String = "com.ElTorqiro.UltimateAbility.AppIcon";
+	
 	public function AppIcon() {
 		
 		App.debug( "AppIcon: " + _name + ": constructor" );
 
-		gotoAndStop( "enabled" );
+		attachMovie( "icon", "m_Icon", getNextHighestDepth() );
 		
 		isVtioIcon = _name == "Icon";
 		
@@ -58,7 +60,7 @@ class com.ElTorqiro.UltimateAbility.AppIcon extends MovieClip {
 		}
 		
 	}
-	
+
 	/**
 	 * moves icon to loaded position
 	 */
@@ -146,9 +148,9 @@ class com.ElTorqiro.UltimateAbility.AppIcon extends MovieClip {
 	public function manageGuiEditMode( edit:Boolean ) : Void {
 	
 		if ( edit && !gemController ) {
-			gemController = GemController( _parent.attachMovie( "GemController", "m_GuiEditModeController", _parent.getNextHighestDepth(), { targets: this } ) );
-			gemController.addEventListener( "scrollWheel", this, "scrollWheelHandler" );
-			gemController.addEventListener( "endDrag", this, "endDragHandler" );
+			gemController = GemController.create( "m_GuiEditModeController", _parent, _parent.getNextHighestDepth(), this );
+			gemController.addEventListener( "scrollWheel", this, "gemScrollWheelHandler" );
+			gemController.addEventListener( "endDrag", this, "gemEndDragHandler" );
 		}
 		
 		else {
@@ -158,12 +160,12 @@ class com.ElTorqiro.UltimateAbility.AppIcon extends MovieClip {
 		
 	}
 
-	private function scrollWheelHandler( event:Object ) : Void {
+	private function gemScrollWheelHandler( event:Object ) : Void {
 		
 		App.prefs.setVal( "icon.scale", App.prefs.getVal( "icon.scale" ) + event.delta * 5 );
 	}
 	
-	private function endDragHandler( event:Object ) : Void {
+	private function gemEndDragHandler( event:Object ) : Void {
 		
 		App.prefs.setVal( "icon.position", new Point( _x, _y ) );
 	}

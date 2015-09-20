@@ -6,14 +6,17 @@ import com.Utils.Signal;
 
 import com.ElTorqiro.UltimateAbility.App;
 import com.ElTorqiro.UltimateAbility.Const;
+import com.ElTorqiro.UltimateAbility.AddonUtils.MovieClipHelper;
 import com.ElTorqiro.UltimateAbility.AddonUtils.GuiEditMode.GemController;
-
+import com.ElTorqiro.UltimateAbility.HUD.UltimateAbilityButton;
 
 /**
  * 
  * 
  */
 class com.ElTorqiro.UltimateAbility.HUD.HUD extends UIComponent {
+	
+	public static var __className:String = "com.ElTorqiro.UltimateAbility.HUD.HUD";
 
 	/**
 	 * constructor
@@ -32,7 +35,7 @@ class com.ElTorqiro.UltimateAbility.HUD.HUD extends UIComponent {
 		loadPosition();
 		
 		// attach button
-		m_Ultimate = attachMovie( "UltimateAbilityButton", "m_Ultimate", getNextHighestDepth() );
+		m_Ultimate = UltimateAbilityButton( MovieClipHelper.attachMovieWithClass( "UltimateAbilityButton", UltimateAbilityButton, "m_Ultimate", this, getNextHighestDepth() ) );
 		
 		// listen for resolution changes
 		guiResolutionScale = DistributedValue.Create("GUIResolutionScale");
@@ -78,9 +81,9 @@ class com.ElTorqiro.UltimateAbility.HUD.HUD extends UIComponent {
 	
 		if ( edit ) {
 			if ( !gemController ) {
-				gemController = GemController( _parent.attachMovie( "GemController", "m_GuiEditModeController", _parent.getNextHighestDepth(), { targets: this } ) );
-				gemController.addEventListener( "scrollWheel", this, "scrollWheelHandler" );
-				gemController.addEventListener( "endDrag", this, "endDragHandler" );
+				gemController = GemController.create( "m_GuiEditModeController", _parent, _parent.getNextHighestDepth(), this );
+				gemController.addEventListener( "scrollWheel", this, "gemScrollWheelHandler" );
+				gemController.addEventListener( "endDrag", this, "gemEndDragHandler" );
 			}
 		}
 		
@@ -91,12 +94,12 @@ class com.ElTorqiro.UltimateAbility.HUD.HUD extends UIComponent {
 		
 	}
 
-	private function scrollWheelHandler( event:Object ) : Void {
+	private function gemScrollWheelHandler( event:Object ) : Void {
 		
 		App.prefs.setVal( "hud.scale", App.prefs.getVal( "hud.scale" ) + event.delta * 5 );
 	}
 	
-	private function endDragHandler( event:Object ) : Void {
+	private function gemEndDragHandler( event:Object ) : Void {
 		
 		App.prefs.setVal( "hud.position", new Point( _x, _y ) );
 	}
@@ -128,7 +131,7 @@ class com.ElTorqiro.UltimateAbility.HUD.HUD extends UIComponent {
 	 * internal variables
 	 */
 
-	public var m_Ultimate:MovieClip;
+	public var m_Ultimate:UltimateAbilityButton;
 	public var gemController:GemController;
 	
     private var guiResolutionScale:DistributedValue;

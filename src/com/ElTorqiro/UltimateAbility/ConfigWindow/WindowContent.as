@@ -47,12 +47,106 @@ class com.ElTorqiro.UltimateAbility.ConfigWindow.WindowContent extends com.Compo
 				},
 				
 				{	type: "heading",
-					text: "Button FX"
+					text: "Button"
 				},
 
+				{	id: "hud.hotkey.enable",
+					type: "checkbox",
+					label: "Show hotkey (if Ability Bar hotkeys visible)",
+					tooltip: "Shows the Ultimate Ability hotkey label on the button, which will be visible in conjunction with the in-game setting for Ability Bar hotkeys.",
+					data: { pref: "hud.hotkey.enable" },
+					loader: componentLoadHandler,
+					saver: componentSaveHandler
+				},
+
+				{	id: "hud.chargeNumber.enable",
+					type: "checkbox",
+					label: "Show Animus charge percent",
+					tooltip: "Shows the Animus charge percent as a number inside the button.",
+					data: { pref: "hud.chargeNumber.enable" },
+					loader: componentLoadHandler,
+					saver: componentSaveHandler
+				},
+				
+				{	type: "block"
+				},
+				
+				{	type: "heading",
+					subType: "sub",
+					text: "when Animus is charging"
+				},
+
+				{	id: "hud.chargingAnimaEnergy.meter.transparency",
+					type: "slider",
+					min: 0,
+					max: 100,
+					valueLabelFormat: "%i%%",
+					label: "Animus charge meter transparency",
+					tooltip: "The transparency of the Animus charge meter while it is charging.",
+					data: { pref: "hud.chargingAnimaEnergy.meter.transparency" },
+					loader: componentLoadHandler,
+					saver: componentSaveHandler
+				},
+				
+				{	id: "hud.chargingAnimaEnergy.meter.tint",
+					type: "checkbox",
+					label: "Tint Animus charge meter",
+					tooltip: "Tints the Animus charge meter when Animus charge is not full.",
+					data: { pref: "hud.chargingAnimaEnergy.meter.tint" },
+					loader: componentLoadHandler,
+					saver: componentSaveHandler
+				},
+
+				{	type: "block"
+				},
+				
+				{	type: "heading",
+					subType: "sub",
+					text: "when Animus is full"
+				},
+				
+				{	id: "hud.fullAnimaEnergy.meter.transparency",
+					type: "slider",
+					min: 0,
+					max: 100,
+					valueLabelFormat: "%i%%",
+					label: "Animus charge meter transparency",
+					tooltip: "The transparency of the Animus charge meter while it is full.",
+					data: { pref: "hud.fullAnimaEnergy.meter.transparency" },
+					loader: componentLoadHandler,
+					saver: componentSaveHandler
+				},
+				
+				{	id: "hud.fullAnimaEnergy.meter.tint",
+					type: "checkbox",
+					label: "Tint Animus charge meter",
+					tooltip: "Tints the Animus charge meter when Animus charge is full.",
+					data: { pref: "hud.fullAnimaEnergy.meter.tint" },
+					loader: componentLoadHandler,
+					saver: componentSaveHandler
+				},
+
+				{	type: "block"
+				},
+				
+				{	id: "hud.fullAnimaEnergy.wings.transparency",
+					type: "slider",
+					min: 0,
+					max: 100,
+					valueLabelFormat: "%i%%",
+					label: "Wings symbol transparency",
+					tooltip: "The transparency of the wings symbol while the Animus charge meter is full.",
+					data: { pref: "hud.fullAnimaEnergy.wings.transparency" },
+					loader: componentLoadHandler,
+					saver: componentSaveHandler
+				},
+				
+				{	type: "block"
+				},
+				
 				{	id: "hud.fullAnimaEnergy.glow.enable",
 					type: "checkbox",
-					label: "Glow when Animus is full",
+					label: "Apply glow effect",
 					tooltip: "Enables a glow effect around the button when Animus is at 100%.",
 					data: { pref: "hud.fullAnimaEnergy.glow.enable" },
 					loader: componentLoadHandler,
@@ -67,7 +161,7 @@ class com.ElTorqiro.UltimateAbility.ConfigWindow.WindowContent extends com.Compo
 					min: Const.MinGlowIntensity,
 					max: Const.MaxGlowIntensity,
 					valueLabelFormat: "%i%%",
-					label: "Intensity",
+					label: "Glow Intensity",
 					tooltip: "The intensity of the 100% Animus glow effect surrounding the button.",
 					data: { pref: "hud.fullAnimaEnergy.glow.intensity" },
 					loader: componentLoadHandler,
@@ -75,6 +169,9 @@ class com.ElTorqiro.UltimateAbility.ConfigWindow.WindowContent extends com.Compo
 				},
 
 				{	type: "indent", size: "reset"
+				},
+				
+				{	type: "column"
 				},
 				
 				{	type: "heading",
@@ -151,8 +248,8 @@ class com.ElTorqiro.UltimateAbility.ConfigWindow.WindowContent extends com.Compo
 
 				{	id: "icon.scale",
 					type: "slider",
-					min: Const.MinWidgetScale,
-					max: Const.MaxWidgetScale,
+					min: Const.MinIconScale,
+					max: Const.MaxIconScale,
 					step: 5,
 					valueLabelFormat: "%i%%",
 					label: "Icon Scale",
@@ -253,9 +350,20 @@ class com.ElTorqiro.UltimateAbility.ConfigWindow.WindowContent extends com.Compo
 
 			"hud.scale",
 			"hud.position",
-			
+
+			"hud.hotkey.enable",
+			"hud.chargeNumber.enable",
+
+			"hud.chargingAnimaEnergy.meter.tint",
+			"hud.chargingAnimaEnergy.meter.transparency",
+
 			"hud.fullAnimaEnergy.glow.enable",
-			"hud.fullAnimaEnergy.glow.intensity"
+			"hud.fullAnimaEnergy.glow.intensity",
+		
+			"hud.fullAnimaEnergy.wings.transparency",
+
+			"hud.fullAnimaEnergy.meter.tint",
+			"hud.fullAnimaEnergy.meter.transparency"
 			
 		];
 		

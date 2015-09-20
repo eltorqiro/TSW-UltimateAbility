@@ -28,7 +28,7 @@ class com.ElTorqiro.UltimateAbility.HUD.UltimateAbilityButton extends UIComponen
 	 * constructor
 	 */
 	public function UltimateAbilityButton() {
-		
+
 		// start up invisible
 		visible = false;
 		
@@ -76,6 +76,8 @@ class com.ElTorqiro.UltimateAbility.HUD.UltimateAbilityButton extends UIComponen
 
 	private function draw() : Void {
 
+		t_Charge._visible = App.prefs.getVal( "hud.chargeNumber.enable" );
+		
 		var tint:Number = App.prefs.getVal( "hud.tints.ophanim." + abilityColourMap[ Shortcut.m_ShortcutList[Const.e_UltimateShortcutSlot].m_SpellId ] );
 		if ( tint == undefined ) {
 			tint = Const.TintNone;
@@ -84,16 +86,28 @@ class com.ElTorqiro.UltimateAbility.HUD.UltimateAbilityButton extends UIComponen
 		CommonUtils.Colorize( m_Fill, tint );
 		
 		if ( isAnimaEnergyFull ) {
+			
+			CommonUtils.Colorize( m_Fill, App.prefs.getVal( "hud.fullAnimaEnergy.meter.tint" ) ? tint : Const.TintNone );
+			m_Fill._alpha = App.prefs.getVal( "hud.fullAnimaEnergy.meter.transparency" );			
+			
 			m_Icon.gotoAndStop( "full" );
-			filters = App.prefs.getVal( "hud.fullAnimaEnergy.glow.enable" ) ?
+			m_Icon.filters = App.prefs.getVal( "hud.fullAnimaEnergy.glow.enable" ) ?
 				[ new GlowFilter(tint, 0.8, 16, 16, App.prefs.getVal( "hud.fullAnimaEnergy.glow.intensity" ) / 100, 3, false, false) ] : [];
 			CommonUtils.Colorize( m_Icon, tint );
+			m_Icon._alpha = App.prefs.getVal( "hud.fullAnimaEnergy.wings.transparency" );
+			
 		}
 		
 		else {
+			
+			CommonUtils.Colorize( m_Fill, App.prefs.getVal( "hud.chargingAnimaEnergy.meter.tint" ) ? tint : Const.TintNone );
+			m_Fill._alpha = App.prefs.getVal( "hud.chargingAnimaEnergy.meter.transparency" );			
+
 			m_Icon.gotoAndStop( "progress" );
-			filters = [];
+			m_Icon.filters = [];
 			CommonUtils.Colorize( m_Icon, Const.TintNone );
+			m_Icon._alpha = 100;
+
 		}
 	}
 	
@@ -136,7 +150,7 @@ class com.ElTorqiro.UltimateAbility.HUD.UltimateAbilityButton extends UIComponen
 	
 	private function refreshHotkey() : Void {
 		
-		t_Hotkey._visible = showHotkeysOnAbilities.GetValue();
+		t_Hotkey._visible = showHotkeysOnAbilities.GetValue() && App.prefs.getVal( "hud.hotkey.enable" );
 		
 		t_Hotkey.text = ""; // needed to make flash understand the text is actually changed now - re-fetch the translation
 		t_Hotkey.text = "<variable name='hotkey:Shortcutbar_Ultimate'/ >";
@@ -163,6 +177,7 @@ class com.ElTorqiro.UltimateAbility.HUD.UltimateAbilityButton extends UIComponen
 
 		// progress fill
 		m_Fill.m_Mask._yscale = animaEnergy;
+		t_Charge.text = Math.floor( animaEnergy ).toString();
 
 	}
 	
@@ -185,12 +200,22 @@ class com.ElTorqiro.UltimateAbility.HUD.UltimateAbilityButton extends UIComponen
 		
 		switch ( pref ) {
 			
+			case "hud.chargeNumber.enable":
+			case "hud.chargingAnimaEnergy.meter.tint":
+			case "hud.chargingAnimaEnergy.meter.transparency":
+			case "hud.fullAnimaEnergy.wings.transparency":
+			case "hud.fullAnimaEnergy.meter.tint":
+			case "hud.fullAnimaEnergy.meter.transparency":
 			case "hud.fullAnimaEnergy.glow.enable":
 			case "hud.fullAnimaEnergy.glow.intensity":
 			case "hud.tints.ophanim.gold":
 			case "hud.tints.ophanim.blue":
 			case "hud.tints.ophanim.purple":
 				invalidate();
+			break;
+			
+			case "hud.hotkey.enable":
+				refreshHotkey();
 			break;
 			
 		}
@@ -203,6 +228,7 @@ class com.ElTorqiro.UltimateAbility.HUD.UltimateAbilityButton extends UIComponen
 
 	public var m_Icon:MovieClip;
 	public var t_Hotkey:TextField;
+	public var t_Charge:TextField;
 	public var m_Fill:MovieClip;
 	 
 	private var character:Character;

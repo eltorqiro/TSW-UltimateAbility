@@ -1,3 +1,11 @@
+1.1.0 -- 2015-09-21
+
+ + added several new visual customisation options
+ 
+ * changed full-charge glow effect to apply on wings icon rather than entire button
+ * (tech) added MovieClipHelper to help prevent symbolname+class collisions with other mods
+  
+  
 1.0.0 -- 2015-09-20
 
  + icon is now colourised depending on which Ultimate Ability your character has received (gold / blue / purple)

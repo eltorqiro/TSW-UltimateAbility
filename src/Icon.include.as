@@ -1,13 +1,15 @@
 import com.ElTorqiro.UltimateAbility.App;
+import com.ElTorqiro.UltimateAbility.AppIcon;
 
+import com.ElTorqiro.UltimateAbility.AddonUtils.MovieClipHelper;
 
 /**
  * standard MovieClip onLoad event handler
  */
 function onLoad() : Void {
-	App.debug("Widget: onLoad");
+	App.debug("Icon: onLoad");
 	
-	attachMovie( "icon", "m_Icon", getNextHighestDepth() );
+	var appIcon:AppIcon = AppIcon( MovieClipHelper.createMovieWithClass( AppIcon, "m_Icon", this, this.getNextHighestDepth() ) );
 }
 
 /**
@@ -15,12 +17,12 @@ function onLoad() : Void {
  * - this is not the same as the generic AS2 onUnload method
  */
 function OnUnload() : Void {
-	App.debug("Widget: OnUnload");
+	App.debug("Icon: OnUnload");
 }
 
 /**
  * TSW GUI event, called after the loading of the clip is complete (via SFClipLoader)
  */
 function LoadArgumentsReceived( arguments:Array ) : Void {
-	App.debug("Widget: LoadArgumentsReceived");
+	App.debug("Icon: LoadArgumentsReceived");
 }

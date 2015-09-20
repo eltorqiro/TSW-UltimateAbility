@@ -12,7 +12,7 @@ class com.ElTorqiro.UltimateAbility.Const {
 	public static var AppID:String = "ElTorqiro_UltimateAbility";
 	public static var AppName:String = "UltimateAbility";
 	public static var AppAuthor:String = "ElTorqiro";
-	public static var AppVersion:String = "1.0.0";
+	public static var AppVersion:String = "1.1.0";
 
 	public static var DebugModeDV:String = "ElTorqiro_UltimateAbility_Debug";
 	
@@ -23,11 +23,9 @@ class com.ElTorqiro.UltimateAbility.Const {
 	public static var HudClipSubDepth:Number = 2;
 	public static var HudClipSubDepthGuiEditMode:Number = 50;
 	
-	public static var WidgetClipPath:String = "ElTorqiro_UltimateAbility\\Widget.swf";
-	public static var WidgetClipDepthLayer:Number = _global.Enums.ViewLayer.e_ViewLayerMiddle;
-	public static var WidgetClipSubDepth:Number = 0;
-	public static var WidgetClipVtioDepthLayer:Number = _global.Enums.ViewLayer.e_ViewLayerTop;
-	public static var WidgetClipVtioSubDepth:Number = 2;
+	public static var IconClipPath:String = "ElTorqiro_UltimateAbility\\Icon.swf";
+	public static var IconClipDepthLayer:Number = _global.Enums.ViewLayer.e_ViewLayerMiddle;
+	public static var IconClipSubDepth:Number = 0;
 	
 	public static var ConfigWindowClipPath:String = "ElTorqiro_UltimateAbility\\ConfigWindow.swf";
 	public static var ConfigWindowClipDepthLayer:Number = _global.Enums.ViewLayer.e_ViewLayerTop;
@@ -38,8 +36,8 @@ class com.ElTorqiro.UltimateAbility.Const {
 	public static var MinHudScale:Number = 50;
 	public static var MaxHudScale:Number = 200;
 	
-	public static var MinWidgetScale:Number = 30;
-	public static var MaxWidgetScale:Number = 200;
+	public static var MinIconScale:Number = 30;
+	public static var MaxIconScale:Number = 200;
 	
 	public static var MinGlowIntensity:Number = 0;
 	public static var MaxGlowIntensity:Number = 300;
@@ -66,4 +64,9 @@ class com.ElTorqiro.UltimateAbility.Const {
 	public static var e_UltimateVisibilitySettingCharged:Number = 1;
 	public static var e_UltimateVisibilitySettingAlways:Number = 2;
 
+	// anima energy meter tint options
+	public static var e_AnimaEnergyMeterTintTypeNever:Number = 0;
+	public static var e_AnimaEnergyMeterTintTypeWhenFull:Number = 1;
+	public static var e_AnimaEnergyMeterTintTypeAlways:Number = 2;
+	
 }

@@ -9,6 +9,8 @@ import com.GameInterface.UtilsBase;
  * 
  */
 class com.ElTorqiro.UltimateAbility.AddonUtils.GuiEditMode.GemOverlay extends UIComponent {
+	
+	public static var __className:String = "com.ElTorqiro.UltimateAbility.AddonUtils.GuiEditMode.GemOverlay";
 
 	public function GemOverlay() {
 

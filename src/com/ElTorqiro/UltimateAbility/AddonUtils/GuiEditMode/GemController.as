@@ -1,6 +1,7 @@
 import flash.geom.Point;
 import gfx.core.UIComponent;
 
+import com.ElTorqiro.UltimateAbility.AddonUtils.MovieClipHelper;
 import com.ElTorqiro.UltimateAbility.AddonUtils.GuiEditMode.GemOverlay;
 
 
@@ -9,9 +10,17 @@ import com.ElTorqiro.UltimateAbility.AddonUtils.GuiEditMode.GemOverlay;
  * 
  */
 class com.ElTorqiro.UltimateAbility.AddonUtils.GuiEditMode.GemController extends UIComponent {
+	
+	public static var __className:String = "com.ElTorqiro.UltimateAbility.AddonUtils.GuiEditMode.GemController";
 
 	public function GemController() {
 
+		dragging = false;
+		clickEvent = null;
+		dragOverlay = null;
+		
+		prevMousePos = null;
+		 
 		if ( groupMoveModifiers == undefined ) {
 		
 			groupMoveModifiers = [
@@ -27,6 +36,10 @@ class com.ElTorqiro.UltimateAbility.AddonUtils.GuiEditMode.GemController extends
 			overlayLinkage = "GemOverlay";
 		}
 		
+		if ( overlayPadding == undefined ) {
+			overlayPadding = 5;
+		}
+		
 	}
 	
 	private function configUI() : Void {
@@ -39,7 +52,7 @@ class com.ElTorqiro.UltimateAbility.AddonUtils.GuiEditMode.GemController extends
 		
 		for ( var i:Number = 0; i < targets.length; i++ ) {
 			
-			var overlay:GemOverlay = GemOverlay( attachMovie( overlayLinkage, "", getNextHighestDepth(), { target: targets[i] } ) );
+			var overlay:GemOverlay = GemOverlay( MovieClipHelper.attachMovieWithClass( overlayLinkage, GemOverlay, "", this, getNextHighestDepth(), { target: targets[i], padding: overlayPadding } ) );
 			
 			overlay.addEventListener( "press", this, "pressHandler" );
 			overlay.addEventListener( "release", this, "releaseHandler" );
@@ -112,6 +125,21 @@ class com.ElTorqiro.UltimateAbility.AddonUtils.GuiEditMode.GemController extends
 	}
 	
 	/**
+	 * factory method for creating a new instance of GemController
+	 * 
+	 * @param	name
+	 * @param	parent
+	 * @param	depth
+	 * 
+	 * @return
+	 */
+	public static function create( name:String, parent:MovieClip, depth:Number, targets ) : GemController {
+		
+		return GemController( MovieClipHelper.createMovieWithClass( GemController, name, parent, depth, { targets: targets } ) );
+		
+	}
+	
+	/**
 	 * internal variables
 	 */
 	
@@ -127,6 +155,7 @@ class com.ElTorqiro.UltimateAbility.AddonUtils.GuiEditMode.GemController extends
 	private var groupMoveModifiers:Array;
 	
 	private var overlayLinkage:String;
+	private var overlayPadding:Number;
 	 
 	/**
 	 * properties
