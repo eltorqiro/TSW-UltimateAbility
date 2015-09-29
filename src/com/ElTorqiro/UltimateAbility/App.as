@@ -351,7 +351,7 @@ class com.ElTorqiro.UltimateAbility.App {
 	private static function install() : Void {
 		
 		// only "install" once ever
-		if ( !prefs.setVal( "app.installed" ) ) {;
+		if ( !prefs.getVal( "app.installed" ) ) {;
 		
 			// hide default button
 			var ultimateVisibilitySetting:DistributedValue = DistributedValue.Create( "ultimate_ability_visibility" );
