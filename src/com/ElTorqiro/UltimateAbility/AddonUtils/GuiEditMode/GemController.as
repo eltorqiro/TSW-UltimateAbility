@@ -72,6 +72,9 @@ class com.ElTorqiro.UltimateAbility.AddonUtils.GuiEditMode.GemController extends
 		dragOverlay = event.target;
 		clickEvent = event;
 		
+		// right click moves all groups
+		moveOverlays = event.button == 1 ? overlays : [ dragOverlay ];
+		
 		onMouseMove = function() {
 			
 			var diff:Point = new Point( _xmouse - prevMousePos.x, _ymouse - prevMousePos.y );
@@ -80,17 +83,17 @@ class com.ElTorqiro.UltimateAbility.AddonUtils.GuiEditMode.GemController extends
 				dragging = true;
 				dispatchEvent( { type: "startDrag", overlay: dragOverlay } );
 				
-				for ( var s:String in overlays ) {
-					dispatchEvent( { type: "targetStartDrag", overlay: overlays[s] } );
+				for ( var s:String in moveOverlays ) {
+					dispatchEvent( { type: "targetStartDrag", overlay: moveOverlays[s] } );
 				}
 				
 			}
 			
 			dispatchEvent( { type: "drag", overlay: dragOverlay, delta: diff } );
 			
-			for ( var s:String in overlays ) {
-				overlays[s].moveBy( diff );
-				dispatchEvent( { type: "targetDrag", overlay: overlays[s], delta: diff } );
+			for ( var s:String in moveOverlays ) {
+				moveOverlays[s].moveBy( diff );
+				dispatchEvent( { type: "targetDrag", overlay: moveOverlays[s], delta: diff } );
 			}
 
 			prevMousePos = new Point( _xmouse, _ymouse );
@@ -104,10 +107,11 @@ class com.ElTorqiro.UltimateAbility.AddonUtils.GuiEditMode.GemController extends
 		if ( dragging ) {
 			dispatchEvent( { type: "endDrag", overlay: dragOverlay } );
 
-			for ( var s:String in overlays ) {
-				dispatchEvent( { type: "targetEndDrag", overlay: overlays[s] } );
+			for ( var s:String in moveOverlays ) {
+				dispatchEvent( { type: "targetEndDrag", overlay: moveOverlays[s] } );
 			}
 			
+			moveOverlays = undefined;
 			dragging = false;
 		}
 		
@@ -146,6 +150,8 @@ class com.ElTorqiro.UltimateAbility.AddonUtils.GuiEditMode.GemController extends
 	private var dragging:Boolean;
 	private var clickEvent:Object;
 	private var dragOverlay:GemOverlay;
+	
+	private var moveOverlays:Array;
 	
 	private var prevMousePos:Point;
 	 

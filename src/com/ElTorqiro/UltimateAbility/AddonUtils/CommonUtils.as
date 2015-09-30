@@ -1,5 +1,3 @@
-import com.Utils.Signal;
-import com.GameInterface.DistributedValue;
 import flash.geom.ColorTransform;
 
 import com.GameInterface.UtilsBase;
@@ -94,7 +92,7 @@ class com.ElTorqiro.UltimateAbility.AddonUtils.CommonUtils {
 	 * @param	object The object to colorizee
 	 * @param	color Color to apply
 	 */	
-	public static function Colorize(object:MovieClip, color:Number):Void {
+	public static function colorize(object:MovieClip, color:Number):Void {
 		// get individual color components 0-1 range
 		var r:Number = ((color >> 16) & 0xff) / 255;
 		var g:Number = ((color >> 8) & 0xff) / 255;
@@ -115,7 +113,7 @@ class com.ElTorqiro.UltimateAbility.AddonUtils.CommonUtils {
 	 * 
 	 * @param	find	string to find in the entire Enum path, leave empty to print the entire nested list
 	 */
-	public static function FindGlobalEnum(find:String) {
+	public static function findGlobalEnum(find:String) {
 		
 		if ( find == "" ) find = undefined;
 		
@@ -157,7 +155,7 @@ class com.ElTorqiro.UltimateAbility.AddonUtils.CommonUtils {
 			enumPath = enumPaths.pop();
 		}
 
-		UtilsBase.PrintChatText("<br />");
+		UtilsBase.PrintChatText("<br />");		
 		UtilsBase.PrintChatText('Found <font color="#00ff00">' + foundCount + '</font> matching <font color="#00ccff">' + findText + '</font>');
 	}
 	
