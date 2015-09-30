@@ -1,3 +1,15 @@
+1.2.0 -- 2015-09-30
+
+ ! because of the new style options, unfortunately all tints will be reset to defaults when upgrading
+
+ + added different colour options for the fill meter and the "full wings" effect
+ + added options to use a default colour for fill meter and wings instead of tinting per Ultimate Ability type
+ + icon will now tint (customisable) to an empty (null) colour when there is no Ultimate Ability slotted, such as when on the motorcycle or using the flute etc
+ 
+ * fixed mod always disabling the default UI on reload
+ * (tech) changed GUI Edit Mode overlay to standard clips
+
+
 1.1.0 -- 2015-09-21
 
  + added several new visual customisation options

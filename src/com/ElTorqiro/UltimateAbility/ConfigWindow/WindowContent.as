@@ -47,7 +47,7 @@ class com.ElTorqiro.UltimateAbility.ConfigWindow.WindowContent extends com.Compo
 				},
 				
 				{	type: "heading",
-					text: "Button"
+					text: "Text Components"
 				},
 
 				{	id: "hud.hotkey.enable",
@@ -72,8 +72,7 @@ class com.ElTorqiro.UltimateAbility.ConfigWindow.WindowContent extends com.Compo
 				},
 				
 				{	type: "heading",
-					subType: "sub",
-					text: "when Animus is charging"
+					text: "When Animus is charging"
 				},
 
 				{	id: "hud.chargingAnimaEnergy.meter.transparency",
@@ -90,7 +89,7 @@ class com.ElTorqiro.UltimateAbility.ConfigWindow.WindowContent extends com.Compo
 				
 				{	id: "hud.chargingAnimaEnergy.meter.tint",
 					type: "checkbox",
-					label: "Tint Animus charge meter",
+					label: "Tint Animus charge meter per Ultimate Ability",
 					tooltip: "Tints the Animus charge meter when Animus charge is not full.",
 					data: { pref: "hud.chargingAnimaEnergy.meter.tint" },
 					loader: componentLoadHandler,
@@ -101,8 +100,7 @@ class com.ElTorqiro.UltimateAbility.ConfigWindow.WindowContent extends com.Compo
 				},
 				
 				{	type: "heading",
-					subType: "sub",
-					text: "when Animus is full"
+					text: "When Animus is full"
 				},
 				
 				{	id: "hud.fullAnimaEnergy.meter.transparency",
@@ -119,7 +117,7 @@ class com.ElTorqiro.UltimateAbility.ConfigWindow.WindowContent extends com.Compo
 				
 				{	id: "hud.fullAnimaEnergy.meter.tint",
 					type: "checkbox",
-					label: "Tint Animus charge meter",
+					label: "Tint Animus charge meter per Ultimate Ability",
 					tooltip: "Tints the Animus charge meter when Animus charge is full.",
 					data: { pref: "hud.fullAnimaEnergy.meter.tint" },
 					loader: componentLoadHandler,
@@ -137,6 +135,15 @@ class com.ElTorqiro.UltimateAbility.ConfigWindow.WindowContent extends com.Compo
 					label: "Wings symbol transparency",
 					tooltip: "The transparency of the wings symbol while the Animus charge meter is full.",
 					data: { pref: "hud.fullAnimaEnergy.wings.transparency" },
+					loader: componentLoadHandler,
+					saver: componentSaveHandler
+				},
+				
+				{	id: "hud.fullAnimaEnergy.wings.tint",
+					type: "checkbox",
+					label: "Tint Wings per Ultimate Ability",
+					tooltip: "Tints the wings portion of the icon when Animus charge is full.",
+					data: { pref: "hud.fullAnimaEnergy.wings.tint" },
 					loader: componentLoadHandler,
 					saver: componentSaveHandler
 				},
@@ -180,24 +187,92 @@ class com.ElTorqiro.UltimateAbility.ConfigWindow.WindowContent extends com.Compo
 				
 				{	id: "hud.tints.ophanim.gold",
 					type: "colourRGB",
-					label: "Gold Wings",
+					label: "Gold Meter",
 					data: { pref: "hud.tints.ophanim.gold" },
 					loader: componentLoadHandler,
 					saver: componentSaveHandler
 				},
+
+				{	id: "hud.tints.ophanim.gold.wings",
+					type: "colourRGB",
+					label: "Gold Wings (full)",
+					data: { pref: "hud.tints.ophanim.gold.wings" },
+					loader: componentLoadHandler,
+					saver: componentSaveHandler
+				},
+
+				{	type: "block"
+				},
 				
 				{	id: "hud.tints.ophanim.blue",
 					type: "colourRGB",
-					label: "Blue Wings",
+					label: "Blue Meter",
 					data: { pref: "hud.tints.ophanim.blue" },
 					loader: componentLoadHandler,
 					saver: componentSaveHandler
 				},
 
+				{	id: "hud.tints.ophanim.blue.wings",
+					type: "colourRGB",
+					label: "Blue Wings (full)",
+					data: { pref: "hud.tints.ophanim.blue.wings" },
+					loader: componentLoadHandler,
+					saver: componentSaveHandler
+				},
+
+				{	type: "block"
+				},
+				
 				{	id: "hud.tints.ophanim.purple",
 					type: "colourRGB",
-					label: "Purple Wings",
+					label: "Purple Meter",
 					data: { pref: "hud.tints.ophanim.purple" },
+					loader: componentLoadHandler,
+					saver: componentSaveHandler
+				},
+
+				{	id: "hud.tints.ophanim.purple.wings",
+					type: "colourRGB",
+					label: "Purple Wings (full)",
+					data: { pref: "hud.tints.ophanim.purple.wings" },
+					loader: componentLoadHandler,
+					saver: componentSaveHandler
+				},
+
+				{	type: "block"
+				},
+
+				{	id: "hud.tints.ophanim.empty",
+					type: "colourRGB",
+					label: "Null Meter",
+					data: { pref: "hud.tints.ophanim.empty" },
+					loader: componentLoadHandler,
+					saver: componentSaveHandler
+				},
+
+				{	id: "hud.tints.ophanim.empty.wings",
+					type: "colourRGB",
+					label: "Null Wings (full)",
+					data: { pref: "hud.tints.ophanim.empty.wings" },
+					loader: componentLoadHandler,
+					saver: componentSaveHandler
+				},
+
+				{	type: "block"
+				},
+
+				{	id: "hud.tints.ophanim.default",
+					type: "colourRGB",
+					label: "Untinted Meter",
+					data: { pref: "hud.tints.ophanim.default" },
+					loader: componentLoadHandler,
+					saver: componentSaveHandler
+				},
+
+				{	id: "hud.tints.ophanim.default.wings",
+					type: "colourRGB",
+					label: "Untinted Wings (full)",
+					data: { pref: "hud.tints.ophanim.default.wings" },
 					loader: componentLoadHandler,
 					saver: componentSaveHandler
 				},
@@ -360,6 +435,7 @@ class com.ElTorqiro.UltimateAbility.ConfigWindow.WindowContent extends com.Compo
 			"hud.fullAnimaEnergy.glow.enable",
 			"hud.fullAnimaEnergy.glow.intensity",
 		
+			"hud.fullAnimaEnergy.wings.tint",
 			"hud.fullAnimaEnergy.wings.transparency",
 
 			"hud.fullAnimaEnergy.meter.tint",

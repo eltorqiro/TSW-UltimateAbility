@@ -195,6 +195,7 @@ class com.ElTorqiro.UltimateAbility.App {
 			}
 		);
 		
+		prefs.add( "hud.fullAnimaEnergy.wings.tint", true );
 		prefs.add( "hud.fullAnimaEnergy.wings.transparency", 100,
 			function( newValue, oldValue ) {
 				var value:Number = Math.min( newValue, 100 );
@@ -214,9 +215,16 @@ class com.ElTorqiro.UltimateAbility.App {
 			}
 		);
 
-		prefs.add( "hud.tints.ophanim.blue", 			0x0088ff );
-		prefs.add( "hud.tints.ophanim.gold", 			0xffd700 );
-		prefs.add( "hud.tints.ophanim.purple", 			0x8800ff );
+		prefs.add( "hud.tints.ophanim.default", 		0xcccccc );
+		prefs.add( "hud.tints.ophanim.default.wings",	0xcccccc );
+		prefs.add( "hud.tints.ophanim.empty",			0x888888 );
+		prefs.add( "hud.tints.ophanim.empty.wings",		0xc0c0c0 );
+		prefs.add( "hud.tints.ophanim.blue", 			0x19bce9 );
+		prefs.add( "hud.tints.ophanim.blue.wings",		0x74eed8 );
+		prefs.add( "hud.tints.ophanim.gold", 			0xe8d000 );
+		prefs.add( "hud.tints.ophanim.gold.wings",		0xebeb08 );
+		prefs.add( "hud.tints.ophanim.purple", 			0x330088 );
+		prefs.add( "hud.tints.ophanim.purple.wings",	0x8a14ff );
 			
 	}
 
@@ -362,6 +370,17 @@ class com.ElTorqiro.UltimateAbility.App {
 		
 		// handle upgrades from one version to the next
 		var prefsVersion:Number = prefs.getVal( "prefs.version" );
+		
+		if ( prefsVersion < 10020 ) {
+			
+			//reset tints to default in 1.2.0
+			for ( var s:String in prefs.list ) {
+				if ( s.indexOf( "hud.tints." ) == 0 ) {
+					prefs.reset( s );
+				}
+			}
+			
+		}
 		
 		// set prefs version to current version
 		prefs.reset( "prefs.version" );

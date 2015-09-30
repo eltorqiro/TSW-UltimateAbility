@@ -17,6 +17,9 @@ import com.ElTorqiro.UltimateAbility.App;
 import com.ElTorqiro.UltimateAbility.AddonUtils.CommonUtils;
 import com.ElTorqiro.UltimateAbility.Const;
 
+import com.GameInterface.FeatInterface;
+import com.GameInterface.FeatData;
+
 
 /**
  * 
@@ -42,18 +45,31 @@ class com.ElTorqiro.UltimateAbility.HUD.UltimateAbilityButton extends UIComponen
 		abilityColourMap[ Const.e_OphanimBlue ] = "blue";
 		abilityColourMap[ Const.e_OphanimPurple ] = "purple";
 		abilityColourMap[ Const.e_OphanimGold ] = "gold";
-
+		
+		// populate list of available ultimate abilities
+		buildAbilityList();
+		
 	}
 
 	private function configUI() : Void {
 		
 		onReleaseOutside = this["onReleaseOutsideAux"] = onRollOut;
+		this["onPressAux"] = onPress;
 		
 		// reference for player character
 		character = Character.GetClientCharacter();
 
 		// listen for ability being added to slot, so correct colour can be used
-		Shortcut.SignalShortcutAdded.Connect( shortcutAddedHandler, this );
+		Shortcut.SignalShortcutAdded.Connect( shortcutSignalHandler, this );
+		Shortcut.SignalShortcutRemoved.Connect( shortcutSignalHandler, this );
+
+		// listen for ability bar being opened and refresh
+		Shortcut.SignalSwapBar.Connect( refreshUltimateShortcuts, this );
+		Shortcut.SignalRestoreSwapBar.Connect( refreshUltimateShortcuts, this );
+		
+		// listen for the available abilities being refreshed
+		FeatInterface.SignalFeatListRebuilt.Connect( buildAbilityList, this );
+		FeatInterface.SignalFeatTrained.Connect( featTrainedHandler, this );
 		
 		// hotkey text
 		t_Hotkey.textAutoSize = "shrink";
@@ -78,34 +94,54 @@ class com.ElTorqiro.UltimateAbility.HUD.UltimateAbilityButton extends UIComponen
 
 		t_Charge._visible = App.prefs.getVal( "hud.chargeNumber.enable" );
 		
-		var tint:Number = App.prefs.getVal( "hud.tints.ophanim." + abilityColourMap[ Shortcut.m_ShortcutList[Const.e_UltimateShortcutSlot].m_SpellId ] );
-		if ( tint == undefined ) {
-			tint = Const.TintNone;
+		var slottedAbility:Number = Shortcut.m_ShortcutList[Const.e_UltimateShortcutSlot].m_SpellId;
+		var tintName:String;
+		
+		if ( slottedAbility == undefined ) {
+			tintName = "empty";
 		}
 		
-		CommonUtils.Colorize( m_Fill, tint );
+		else {
+			tintName = abilityColourMap[ slottedAbility ];
+			if ( tintName == undefined ) {
+				tintName = "default";
+			}
+		}
+		
+		var tint:Number = App.prefs.getVal( "hud.tints.ophanim." + tintName );;
+		var tintWings:Number = App.prefs.getVal( "hud.tints.ophanim." + tintName + ".wings" );
+		var tintDefault:Number = App.prefs.getVal( "hud.tints.ophanim.default" );
+		var tintWingsDefault:Number = App.prefs.getVal( "hud.tints.ophanim.default" );
 		
 		if ( isAnimaEnergyFull ) {
+
+			// entire button glow
+			filters = App.prefs.getVal( "hud.fullAnimaEnergy.glow.enable" ) ?
+				[ new GlowFilter( App.prefs.getVal( "hud.fullAnimaEnergy.wings.tint" ) ? tint : tintDefault, 0.8, 16, 16, App.prefs.getVal( "hud.fullAnimaEnergy.glow.intensity" ) / 100, 3, false, false ) ] : [];
 			
-			CommonUtils.Colorize( m_Fill, App.prefs.getVal( "hud.fullAnimaEnergy.meter.tint" ) ? tint : Const.TintNone );
-			m_Fill._alpha = App.prefs.getVal( "hud.fullAnimaEnergy.meter.transparency" );			
-			
+			// meter fill
+			CommonUtils.colorize( m_Fill, App.prefs.getVal( "hud.fullAnimaEnergy.meter.tint" ) ? tint : tintDefault );
+			m_Fill._alpha = App.prefs.getVal( "hud.fullAnimaEnergy.meter.transparency" );
+
+			// wings
 			m_Icon.gotoAndStop( "full" );
-			m_Icon.filters = App.prefs.getVal( "hud.fullAnimaEnergy.glow.enable" ) ?
-				[ new GlowFilter(tint, 0.8, 16, 16, App.prefs.getVal( "hud.fullAnimaEnergy.glow.intensity" ) / 100, 3, false, false) ] : [];
-			CommonUtils.Colorize( m_Icon, tint );
+			CommonUtils.colorize( m_Icon, App.prefs.getVal( "hud.fullAnimaEnergy.wings.tint" ) ? tintWings : tintWingsDefault );
 			m_Icon._alpha = App.prefs.getVal( "hud.fullAnimaEnergy.wings.transparency" );
 			
 		}
 		
 		else {
 			
-			CommonUtils.Colorize( m_Fill, App.prefs.getVal( "hud.chargingAnimaEnergy.meter.tint" ) ? tint : Const.TintNone );
-			m_Fill._alpha = App.prefs.getVal( "hud.chargingAnimaEnergy.meter.transparency" );			
+			// entire button glow
+			filters = [];
+			
+			// meter fill
+			CommonUtils.colorize( m_Fill, App.prefs.getVal( "hud.chargingAnimaEnergy.meter.tint" ) ? tint : tintDefault );
+			m_Fill._alpha = App.prefs.getVal( "hud.chargingAnimaEnergy.meter.transparency" );
 
+			// wings
 			m_Icon.gotoAndStop( "progress" );
-			m_Icon.filters = [];
-			CommonUtils.Colorize( m_Icon, Const.TintNone );
+			CommonUtils.colorize( m_Icon, Const.TintNone );
 			m_Icon._alpha = 100;
 
 		}
@@ -113,9 +149,14 @@ class com.ElTorqiro.UltimateAbility.HUD.UltimateAbilityButton extends UIComponen
 	
 	private function onPress( controllerIdx:Number, keyboardOrMouse:Number, button:Number ) {
 		
-		// left clicks only
+		// left click uses ability
 		if ( button == 0 /*&& animaEnergyFull */ ) {
 			Shortcut.UseShortcut( Const.e_UltimateShortcutSlot );
+		}
+		
+		// right click rotates through available abilities
+		else if ( button == 1 ) {
+			selectNextAbility();
 		}
 		
 	}
@@ -136,7 +177,6 @@ class com.ElTorqiro.UltimateAbility.HUD.UltimateAbilityButton extends UIComponen
 		var tooltipData:TooltipData = TooltipDataProvider.GetShortcutbarTooltip( Const.e_UltimateShortcutSlot );
 		
 		// add raw xp value
-		//tooltipData.AddAttributeSplitter();
 		tooltipData.AddAttribute('',  'Animus: <font color="#ffff00"><b>' + animaEnergy + '%</b></font>' );
 		tooltipData.AddAttribute('',  '' );
 		
@@ -181,14 +221,85 @@ class com.ElTorqiro.UltimateAbility.HUD.UltimateAbilityButton extends UIComponen
 
 	}
 	
-	private function shortcutAddedHandler( position:Number ) : Void {
+	private function shortcutSignalHandler( position:Number ) : Void {
 		
-		if ( position == Const.e_UltimateShortcutSlot ) {
+		if ( position >= Const.e_UltimateShortcutSlot && position <= Const.e_UltimateShortcutSlot + Const.e_UltimateShortcutSlotCount - 1 ) {
+			
+			updateSelectedAbility();
 			invalidate();
 		}
 		
 	}
 
+	private function refreshUltimateShortcuts() : Void {
+		Shortcut.RefreshShortcuts( Const.e_UltimateShortcutSlot, Const.e_UltimateShortcutSlotCount );
+	}
+
+	private function buildAbilityList() : Void {
+
+		App.debug( "Button: building ability list" );
+		
+		abilities = new Array();
+		for ( var s:String in FeatInterface.m_FeatList ) {
+			
+			var feat:FeatData = FeatInterface.m_FeatList[ s ];
+			if ( feat.m_SpellType == Const.e_UltimateAbilitySpellType && feat.m_Trained ) {
+
+				App.debug( "Button: found: " + feat.m_Name + ", spell: " + feat.m_Spell + ", index: " + feat.m_AbilityIndex );
+				abilities.push( feat.m_Spell );
+			}
+		}
+
+		updateSelectedAbility();
+		
+	}
+	
+	private function updateSelectedAbility() : Void {
+		
+		var selectedSpellId:Number = Shortcut.m_ShortcutList[Const.e_UltimateShortcutSlot].m_SpellId;
+		
+		selectedAbility = null;
+		if ( selectedSpellId == undefined ) return;
+		
+		for ( var s:String in abilities ) {
+			if ( abilities[s] == selectedSpellId ) {
+				selectedAbility = Number(s);
+				break;
+			}
+		}
+		
+		if ( tooltip ) {
+			openTooltip();
+		}
+	}
+	
+	private function selectNextAbility() : Void {
+		
+		if ( abilities.length <= 1 ) return;
+		
+		var nextAbility:Number = selectedAbility + 1;
+		
+		if ( nextAbility >= abilities.length ) {
+			nextAbility = 0;
+		}
+		
+		App.debug("Button: selecting " + nextAbility );
+		
+		var spellId:Number = abilities[ nextAbility ];
+		if ( spellId != undefined ) {
+			Shortcut.AddSpell( Const.e_UltimateShortcutSlot, spellId );
+		}
+		
+	}
+
+	private function featTrainedHandler( position:Number ) : Void {
+		
+		if ( FeatData(FeatInterface.m_FeatList[ position ]).m_SpellType == Const.e_UltimateAbilitySpellType ) {
+			buildAbilityList();
+		}
+		
+	}
+	
 	/**
 	 * handles updates based on pref changes
 	 * 
@@ -203,14 +314,22 @@ class com.ElTorqiro.UltimateAbility.HUD.UltimateAbilityButton extends UIComponen
 			case "hud.chargeNumber.enable":
 			case "hud.chargingAnimaEnergy.meter.tint":
 			case "hud.chargingAnimaEnergy.meter.transparency":
+			case "hud.fullAnimaEnergy.wings.tint":
 			case "hud.fullAnimaEnergy.wings.transparency":
 			case "hud.fullAnimaEnergy.meter.tint":
 			case "hud.fullAnimaEnergy.meter.transparency":
 			case "hud.fullAnimaEnergy.glow.enable":
 			case "hud.fullAnimaEnergy.glow.intensity":
+			case "hud.tints.ophanim.empty":
+			case "hud.tints.ophanim.empty.wings":
+			case "hud.tints.ophanim.default":
+			case "hud.tints.ophanim.default.wings":
 			case "hud.tints.ophanim.gold":
+			case "hud.tints.ophanim.gold.wings":
 			case "hud.tints.ophanim.blue":
+			case "hud.tints.ophanim.blue.wings":
 			case "hud.tints.ophanim.purple":
+			case "hud.tints.ophanim.purple.wings":
 				invalidate();
 			break;
 			
@@ -230,6 +349,7 @@ class com.ElTorqiro.UltimateAbility.HUD.UltimateAbilityButton extends UIComponen
 	public var t_Hotkey:TextField;
 	public var t_Charge:TextField;
 	public var m_Fill:MovieClip;
+	public var m_Stroke:MovieClip;
 	 
 	private var character:Character;
 	private var tooltip:TooltipInterface;
@@ -237,6 +357,8 @@ class com.ElTorqiro.UltimateAbility.HUD.UltimateAbilityButton extends UIComponen
 	private var showHotkeysOnAbilities:DistributedValue;
 
 	private var abilityColourMap:Object;
+	private var abilities:Array;
+	private var selectedAbility:Number;
 	
 	private var animaEnergy:Number;
 	

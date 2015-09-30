@@ -105,7 +105,7 @@ class com.ElTorqiro.UltimateAbility.AppIcon extends MovieClip {
 	}
 	
 	/**
-	 * opens a tooltip on the icon, showing the current status of AegisHUD and some instructions
+	 * opens a tooltip on the icon, showing the current status of UltimateAbility and some instructions
 	 */
 	private function openTooltip() : Void {
 		
