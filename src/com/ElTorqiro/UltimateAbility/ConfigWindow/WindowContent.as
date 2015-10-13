@@ -7,6 +7,8 @@ import com.ElTorqiro.UltimateAbility.AddonUtils.UI.PanelBuilder;
 import com.ElTorqiro.UltimateAbility.Const;
 import com.ElTorqiro.UltimateAbility.App;
 
+import com.ElTorqiro.UltimateAbility.AddonUtils.MovieClipHelper;
+
 /**
  * 
  * 
@@ -24,143 +26,116 @@ class com.ElTorqiro.UltimateAbility.ConfigWindow.WindowContent extends com.Compo
 		// define the config panel to be built
 		var def:Object = {
 			
-			columnWidth: 280,
-			columnPadding: 40,
-			
-			blockSpacing: 10,
-			indentSpacing: 15,
-			groupSpacing: 20,
+			// panel default load/save handlers
+			load: componentLoadHandler,
+			save: componentSaveHandler,
 			
 			layout: [
 				
-				{	type: "heading",
-					text: "General"
-				},
-				
 				{	id: "defaultUI.animaEnergyBar.hide",
 					type: "checkbox",
-					label: "Hide default Animus progress bar",
-					tooltip: "Hides the default UI Animus progress bar.",
-					data: { pref: "defaultUI.animaEnergyBar.hide" },
-					loader: componentLoadHandler,
-					saver: componentSaveHandler
+					label: "Hide default Animus charge bar",
+					tooltip: "Hides the default UI Animus charge bar.",
+					data: { pref: "defaultUI.animaEnergyBar.hide" }
 				},
 				
-				{	type: "heading",
-					text: "Text Components"
+				{	type: "group"
 				},
 
+				{	id: "hud.tooltips.enabled",
+					type: "checkbox",
+					label: "Show tooltip",
+					tooltip: "Enables tooltips when hovering the mouse over the button.",
+					data: { pref: "hud.tooltips.enabled" }
+				},
+				
 				{	id: "hud.hotkey.enable",
 					type: "checkbox",
 					label: "Show hotkey (if Ability Bar hotkeys visible)",
 					tooltip: "Shows the Ultimate Ability hotkey label on the button, which will be visible in conjunction with the in-game setting for Ability Bar hotkeys.",
-					data: { pref: "hud.hotkey.enable" },
-					loader: componentLoadHandler,
-					saver: componentSaveHandler
+					data: { pref: "hud.hotkey.enable" }
 				},
 
 				{	id: "hud.chargeNumber.enable",
 					type: "checkbox",
 					label: "Show Animus charge percent",
 					tooltip: "Shows the Animus charge percent as a number inside the button.",
-					data: { pref: "hud.chargeNumber.enable" },
-					loader: componentLoadHandler,
-					saver: componentSaveHandler
+					data: { pref: "hud.chargeNumber.enable" }
 				},
 				
-				{	type: "block"
-				},
-				
-				{	type: "heading",
-					text: "When Animus is charging"
+				{	type: "section",
+					label: "Charging Animus"
 				},
 
 				{	id: "hud.chargingAnimaEnergy.meter.transparency",
 					type: "slider",
 					min: 0,
 					max: 100,
-					valueLabelFormat: "%i%%",
+					valueFormat: "%i%%",
 					label: "Animus charge meter transparency",
 					tooltip: "The transparency of the Animus charge meter while it is charging.",
-					data: { pref: "hud.chargingAnimaEnergy.meter.transparency" },
-					loader: componentLoadHandler,
-					saver: componentSaveHandler
+					data: { pref: "hud.chargingAnimaEnergy.meter.transparency" }
 				},
 				
 				{	id: "hud.chargingAnimaEnergy.meter.tint",
 					type: "checkbox",
 					label: "Tint Animus charge meter per Ultimate Ability",
 					tooltip: "Tints the Animus charge meter when Animus charge is not full.",
-					data: { pref: "hud.chargingAnimaEnergy.meter.tint" },
-					loader: componentLoadHandler,
-					saver: componentSaveHandler
+					data: { pref: "hud.chargingAnimaEnergy.meter.tint" }
 				},
 
-				{	type: "block"
-				},
-				
-				{	type: "heading",
-					text: "When Animus is full"
+				{	type: "section",
+					label: "Full Animus"
 				},
 				
 				{	id: "hud.fullAnimaEnergy.meter.transparency",
 					type: "slider",
 					min: 0,
 					max: 100,
-					valueLabelFormat: "%i%%",
+					valueFormat: "%i%%",
 					label: "Animus charge meter transparency",
 					tooltip: "The transparency of the Animus charge meter while it is full.",
-					data: { pref: "hud.fullAnimaEnergy.meter.transparency" },
-					loader: componentLoadHandler,
-					saver: componentSaveHandler
+					data: { pref: "hud.fullAnimaEnergy.meter.transparency" }
 				},
 				
 				{	id: "hud.fullAnimaEnergy.meter.tint",
 					type: "checkbox",
 					label: "Tint Animus charge meter per Ultimate Ability",
 					tooltip: "Tints the Animus charge meter when Animus charge is full.",
-					data: { pref: "hud.fullAnimaEnergy.meter.tint" },
-					loader: componentLoadHandler,
-					saver: componentSaveHandler
+					data: { pref: "hud.fullAnimaEnergy.meter.tint" }
 				},
 
-				{	type: "block"
+				{	type: "group"
 				},
 				
 				{	id: "hud.fullAnimaEnergy.wings.transparency",
 					type: "slider",
 					min: 0,
 					max: 100,
-					valueLabelFormat: "%i%%",
+					valueFormat: "%i%%",
 					label: "Wings symbol transparency",
 					tooltip: "The transparency of the wings symbol while the Animus charge meter is full.",
-					data: { pref: "hud.fullAnimaEnergy.wings.transparency" },
-					loader: componentLoadHandler,
-					saver: componentSaveHandler
+					data: { pref: "hud.fullAnimaEnergy.wings.transparency" }
 				},
 				
 				{	id: "hud.fullAnimaEnergy.wings.tint",
 					type: "checkbox",
 					label: "Tint Wings per Ultimate Ability",
 					tooltip: "Tints the wings portion of the icon when Animus charge is full.",
-					data: { pref: "hud.fullAnimaEnergy.wings.tint" },
-					loader: componentLoadHandler,
-					saver: componentSaveHandler
+					data: { pref: "hud.fullAnimaEnergy.wings.tint" }
 				},
 				
-				{	type: "block"
+				{	type: "group"
 				},
 				
 				{	id: "hud.fullAnimaEnergy.glow.enable",
 					type: "checkbox",
 					label: "Apply glow effect",
 					tooltip: "Enables a glow effect around the button when Animus is at 100%.",
-					data: { pref: "hud.fullAnimaEnergy.glow.enable" },
-					loader: componentLoadHandler,
-					saver: componentSaveHandler
+					data: { pref: "hud.fullAnimaEnergy.glow.enable" }
 				},
 				
-				{	type: "indent"
+				{	type: "indent-in"
 				},
 
 				{	id: "hud.fullAnimaEnergy.glow.intensity",
@@ -170,123 +145,105 @@ class com.ElTorqiro.UltimateAbility.ConfigWindow.WindowContent extends com.Compo
 					valueLabelFormat: "%i%%",
 					label: "Glow Intensity",
 					tooltip: "The intensity of the 100% Animus glow effect surrounding the button.",
-					data: { pref: "hud.fullAnimaEnergy.glow.intensity" },
-					loader: componentLoadHandler,
-					saver: componentSaveHandler
+					data: { pref: "hud.fullAnimaEnergy.glow.intensity" }
 				},
 
-				{	type: "indent", size: "reset"
-				},
-				
 				{	type: "column"
 				},
 				
-				{	type: "heading",
-					text: "Tints"
+				{	type: "section",
+					label: "Tints"
 				},
 				
 				{	id: "hud.tints.ophanim.gold",
-					type: "colourRGB",
+					type: "colorInput",
 					label: "Gold Meter",
-					data: { pref: "hud.tints.ophanim.gold" },
-					loader: componentLoadHandler,
-					saver: componentSaveHandler
+					data: { pref: "hud.tints.ophanim.gold" }
 				},
 
 				{	id: "hud.tints.ophanim.gold.wings",
-					type: "colourRGB",
+					type: "colorInput",
 					label: "Gold Wings (full)",
-					data: { pref: "hud.tints.ophanim.gold.wings" },
-					loader: componentLoadHandler,
-					saver: componentSaveHandler
+					data: { pref: "hud.tints.ophanim.gold.wings" }
 				},
 
-				{	type: "block"
+				{	type: "group"
 				},
 				
 				{	id: "hud.tints.ophanim.blue",
-					type: "colourRGB",
+					type: "colorInput",
 					label: "Blue Meter",
-					data: { pref: "hud.tints.ophanim.blue" },
-					loader: componentLoadHandler,
-					saver: componentSaveHandler
+					data: { pref: "hud.tints.ophanim.blue" }
 				},
 
 				{	id: "hud.tints.ophanim.blue.wings",
-					type: "colourRGB",
+					type: "colorInput",
 					label: "Blue Wings (full)",
-					data: { pref: "hud.tints.ophanim.blue.wings" },
-					loader: componentLoadHandler,
-					saver: componentSaveHandler
+					data: { pref: "hud.tints.ophanim.blue.wings" }
 				},
 
-				{	type: "block"
+				{	type: "group"
 				},
 				
 				{	id: "hud.tints.ophanim.purple",
-					type: "colourRGB",
+					type: "colorInput",
 					label: "Purple Meter",
-					data: { pref: "hud.tints.ophanim.purple" },
-					loader: componentLoadHandler,
-					saver: componentSaveHandler
+					data: { pref: "hud.tints.ophanim.purple" }
 				},
 
 				{	id: "hud.tints.ophanim.purple.wings",
-					type: "colourRGB",
+					type: "colorInput",
 					label: "Purple Wings (full)",
-					data: { pref: "hud.tints.ophanim.purple.wings" },
-					loader: componentLoadHandler,
-					saver: componentSaveHandler
+					data: { pref: "hud.tints.ophanim.purple.wings" }
 				},
 
-				{	type: "block"
+				{	type: "group"
 				},
 
 				{	id: "hud.tints.ophanim.empty",
-					type: "colourRGB",
+					type: "colorInput",
 					label: "Null Meter",
-					data: { pref: "hud.tints.ophanim.empty" },
-					loader: componentLoadHandler,
-					saver: componentSaveHandler
+					data: { pref: "hud.tints.ophanim.empty" }
 				},
 
 				{	id: "hud.tints.ophanim.empty.wings",
-					type: "colourRGB",
+					type: "colorInput",
 					label: "Null Wings (full)",
-					data: { pref: "hud.tints.ophanim.empty.wings" },
-					loader: componentLoadHandler,
-					saver: componentSaveHandler
+					data: { pref: "hud.tints.ophanim.empty.wings" }
 				},
 
-				{	type: "block"
+				{	type: "group"
 				},
 
 				{	id: "hud.tints.ophanim.default",
-					type: "colourRGB",
+					type: "colorInput",
 					label: "Untinted Meter",
-					data: { pref: "hud.tints.ophanim.default" },
-					loader: componentLoadHandler,
-					saver: componentSaveHandler
+					data: { pref: "hud.tints.ophanim.default" }
 				},
 
 				{	id: "hud.tints.ophanim.default.wings",
-					type: "colourRGB",
+					type: "colorInput",
 					label: "Untinted Wings (full)",
-					data: { pref: "hud.tints.ophanim.default.wings" },
-					loader: componentLoadHandler,
-					saver: componentSaveHandler
+					data: { pref: "hud.tints.ophanim.default.wings" }
 				},
 
-				{	type: "block"
+				{	type: "group"
 				},
 				
 				{	type: "button",
-					text: "Reset tints to defaults",
+					text: "Reset Tints",
 					onClick: Delegate.create( this, resetTintDefaults )
 				},
 				
-				{	type: "heading",
-					text: "Size & Position"
+				{	type: "section",
+					label: "Size & Position"
+				},
+				
+				{	type: "text",
+					text: "Use GUI edit mode to manipulate the button.  Left-button drags it, and mouse wheel adjusts scale."
+				},
+				
+				{	type: "group"
 				},
 				
 				{	id: "hud.scale",
@@ -294,12 +251,10 @@ class com.ElTorqiro.UltimateAbility.ConfigWindow.WindowContent extends com.Compo
 					min: Const.MinHudScale,
 					max: Const.MaxHudScale,
 					step: 5,
-					valueLabelFormat: "%i%%",
+					valueFormat: "%i%%",
 					label: "Button Scale",
 					tooltip: "The scale of the button.  You can also change this in GUI Edit Mode by scrolling the mouse wheel while hovering over the button.",
-					data: { pref: "hud.scale" },
-					loader: componentLoadHandler,
-					saver: componentSaveHandler
+					data: { pref: "hud.scale" }
 				},
 
 				{	type: "button",
@@ -318,7 +273,7 @@ class com.ElTorqiro.UltimateAbility.ConfigWindow.WindowContent extends com.Compo
 			
 			def.layout = def.layout.concat( [
 				
-				{	type: "block"
+				{	type: "group"
 				},
 
 				{	id: "icon.scale",
@@ -326,12 +281,10 @@ class com.ElTorqiro.UltimateAbility.ConfigWindow.WindowContent extends com.Compo
 					min: Const.MinIconScale,
 					max: Const.MaxIconScale,
 					step: 5,
-					valueLabelFormat: "%i%%",
+					valueFormat: "%i%%",
 					label: "Icon Scale",
 					tooltip: "The scale of the addon icon.  You can also change this in GUI Edit Mode by scrolling the mouse wheel while hovering over the icon.",
-					data: { pref: "icon.scale" },
-					loader: componentLoadHandler,
-					saver: componentSaveHandler
+					data: { pref: "icon.scale" }
 				},
 
 				{	type: "button",
@@ -346,18 +299,19 @@ class com.ElTorqiro.UltimateAbility.ConfigWindow.WindowContent extends com.Compo
 		}
 		
 		def.layout = def.layout.concat( [
-			{	type: "heading",
-				text: "Global Reset"
+			{	type: "section",
+				label: "Global Reset"
 			},
 
 			{	type: "button",
-				text: "Reset all to defaults",
+				text: "Reset All",
 				onClick: Delegate.create( this, resetAllDefaults )
 			}
 		] );
 		
 		// build the panel based on definition
-		PanelBuilder.build( def, createEmptyMovieClip( "m_Panel", getNextHighestDepth() ) );
+		var panel:PanelBuilder = PanelBuilder( MovieClipHelper.createMovieWithClass( PanelBuilder, "m_Panel", this, this.getNextHighestDepth() ) );
+		panel.build( def );
 		
 		// set up listener for pref changes
 		App.prefs.SignalValueChanged.Connect( prefListener, this );
@@ -376,12 +330,12 @@ class com.ElTorqiro.UltimateAbility.ConfigWindow.WindowContent extends com.Compo
 			]
 		};
 		
-		PanelBuilder.build( def, createEmptyMovieClip( "m_TitleBarPanel", getNextHighestDepth() ) );
-		//m_TitleBarPanel._x = 170;
-		m_TitleBarPanel._x = _parent.m_Title.textWidth + 20;
-		m_TitleBarPanel._y -= m_TitleBarPanel._height + 11;
+		var panel:PanelBuilder = PanelBuilder( MovieClipHelper.createMovieWithClass( PanelBuilder, "m_TitleBarPanel", this, this.getNextHighestDepth() ) );
+		panel.build( def );
 		
-		//SetSize( Math.round(Math.max(m_Content._width, 200)), Math.round(Math.max(m_Content._height, 200)) );
+		panel._x = Math.round( _parent.m_Title.textWidth + 10 );
+		panel._y -= Math.round( _y - _parent.m_Title._y + 1);
+		
 		SignalSizeChanged.Emit();
 	}
 
@@ -402,11 +356,9 @@ class com.ElTorqiro.UltimateAbility.ConfigWindow.WindowContent extends com.Compo
 	 */
 	private function prefListener( name:String, newValue, oldValue ) : Void {
 		
-		var componentName:String = "component_" + name;
-		
 		// only update controls that are using the pref shortcuts
-		if ( m_Panel[ componentName ].data.pref ) {
-			m_Panel[ componentName ].loader();
+		if ( m_Panel.components[ name ].api.data.pref ) {
+			m_Panel.components[ name ].api.load();
 		}
 		
 	}
@@ -422,6 +374,8 @@ class com.ElTorqiro.UltimateAbility.ConfigWindow.WindowContent extends com.Compo
 			"icon.scale",
 			
 			"defaultUI.animaEnergyBar.hide",
+			
+			"hud.tooltips.enabled",
 
 			"hud.scale",
 			"hud.position",
@@ -472,7 +426,6 @@ class com.ElTorqiro.UltimateAbility.ConfigWindow.WindowContent extends com.Compo
 	 * @param	height
 	 */
     public function SetSize(width:Number, height:Number) : Void {
-		
 		SignalSizeChanged.Emit();
     }
 
@@ -482,9 +435,7 @@ class com.ElTorqiro.UltimateAbility.ConfigWindow.WindowContent extends com.Compo
 	 * @return dimensions of content size
 	 */
     public function GetSize() : Point {
-        //return new Point( m_Panel._width + 10, m_Panel._height );
-		
-		return new Point( m_Panel.panelWidth, m_Panel.panelHeight );
+		return new Point( m_Panel.width, m_Panel.height );
     }
 	
 	/*

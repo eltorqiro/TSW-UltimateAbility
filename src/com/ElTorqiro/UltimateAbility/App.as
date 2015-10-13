@@ -172,6 +172,7 @@ class com.ElTorqiro.UltimateAbility.App {
 
 		prefs.add( "defaultUI.animaEnergyBar.hide", true );
 
+		prefs.add( "hud.tooltips.enabled", true );
 		prefs.add( "hud.hotkey.enable", true );
 		prefs.add( "hud.chargeNumber.enable", false );
 

@@ -169,10 +169,14 @@ class com.ElTorqiro.UltimateAbility.HUD.UltimateAbilityButton extends UIComponen
 		closeTooltip();
 	}
 
-	
     private function openTooltip() : Void {
 		// close any existing tooltip
 		closeTooltip();
+		
+		var abilityBarTooltipSetting:Boolean = DistributedValue.GetDValue( "BottomBarShowTooltips" );
+		if ( abilityBarTooltipSetting == undefined ) abilityBarTooltipSetting = true;
+		
+		if ( !App.prefs.getVal( "hud.tooltips.enabled" ) || !abilityBarTooltipSetting ) return;
 		
 		var tooltipData:TooltipData = TooltipDataProvider.GetShortcutbarTooltip( Const.e_UltimateShortcutSlot );
 		
