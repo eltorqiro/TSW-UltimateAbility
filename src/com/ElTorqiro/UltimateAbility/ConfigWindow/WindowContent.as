@@ -155,45 +155,54 @@ class com.ElTorqiro.UltimateAbility.ConfigWindow.WindowContent extends com.Compo
 					label: "Tints"
 				},
 				
+				{	id: "hud.tints.ophanim.default",
+					type: "colorInput",
+					label: "Untinted Fill",
+					data: { pref: "hud.tints.ophanim.default" }
+				},
+
+				{	id: "hud.tints.ophanim.default.wings",
+					type: "colorInput",
+					label: "Untinted Wings (full charge)",
+					data: { pref: "hud.tints.ophanim.default.wings" }
+				},
+
+				{	type: "group"
+				},
+				
 				{	id: "hud.tints.ophanim.gold",
 					type: "colorInput",
-					label: "Gold Meter",
+					label: "Gold Fill",
 					data: { pref: "hud.tints.ophanim.gold" }
 				},
 
 				{	id: "hud.tints.ophanim.gold.wings",
 					type: "colorInput",
-					label: "Gold Wings (full)",
+					label: "Gold Wings (full charge)",
 					data: { pref: "hud.tints.ophanim.gold.wings" }
 				},
 
-				{	type: "group"
-				},
-				
 				{	id: "hud.tints.ophanim.blue",
 					type: "colorInput",
-					label: "Blue Meter",
+					label: "Blue Fill",
 					data: { pref: "hud.tints.ophanim.blue" }
 				},
 
 				{	id: "hud.tints.ophanim.blue.wings",
 					type: "colorInput",
-					label: "Blue Wings (full)",
+					label: "Blue Wings (full charge)",
 					data: { pref: "hud.tints.ophanim.blue.wings" }
 				},
 
-				{	type: "group"
-				},
-				
 				{	id: "hud.tints.ophanim.purple",
 					type: "colorInput",
-					label: "Purple Meter",
+					label: "Purple Fill",
 					data: { pref: "hud.tints.ophanim.purple" }
 				},
 
 				{	id: "hud.tints.ophanim.purple.wings",
 					type: "colorInput",
-					label: "Purple Wings (full)",
+					label: "Purple Wings (full charge)",
 					data: { pref: "hud.tints.ophanim.purple.wings" }
 				},
 
@@ -202,29 +211,14 @@ class com.ElTorqiro.UltimateAbility.ConfigWindow.WindowContent extends com.Compo
 
 				{	id: "hud.tints.ophanim.empty",
 					type: "colorInput",
-					label: "Null Meter",
+					label: "'No Ability' Fill",
 					data: { pref: "hud.tints.ophanim.empty" }
 				},
 
 				{	id: "hud.tints.ophanim.empty.wings",
 					type: "colorInput",
-					label: "Null Wings (full)",
+					label: "'No Ability' Wings (full charge)",
 					data: { pref: "hud.tints.ophanim.empty.wings" }
-				},
-
-				{	type: "group"
-				},
-
-				{	id: "hud.tints.ophanim.default",
-					type: "colorInput",
-					label: "Untinted Meter",
-					data: { pref: "hud.tints.ophanim.default" }
-				},
-
-				{	id: "hud.tints.ophanim.default.wings",
-					type: "colorInput",
-					label: "Untinted Wings (full)",
-					data: { pref: "hud.tints.ophanim.default.wings" }
 				},
 
 				{	type: "group"

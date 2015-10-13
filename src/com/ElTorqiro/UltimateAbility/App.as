@@ -220,12 +220,12 @@ class com.ElTorqiro.UltimateAbility.App {
 		prefs.add( "hud.tints.ophanim.default.wings",	0xcccccc );
 		prefs.add( "hud.tints.ophanim.empty",			0x888888 );
 		prefs.add( "hud.tints.ophanim.empty.wings",		0xc0c0c0 );
-		prefs.add( "hud.tints.ophanim.blue", 			0x19bce9 );
-		prefs.add( "hud.tints.ophanim.blue.wings",		0x74eed8 );
-		prefs.add( "hud.tints.ophanim.gold", 			0xe8d000 );
-		prefs.add( "hud.tints.ophanim.gold.wings",		0xebeb08 );
+		prefs.add( "hud.tints.ophanim.blue", 			0x0088FF );
+		prefs.add( "hud.tints.ophanim.blue.wings",		0x88FFFF );
+		prefs.add( "hud.tints.ophanim.gold", 			0xFFD000 );
+		prefs.add( "hud.tints.ophanim.gold.wings",		0xFFFF08 );
 		prefs.add( "hud.tints.ophanim.purple", 			0x330088 );
-		prefs.add( "hud.tints.ophanim.purple.wings",	0x8a14ff );
+		prefs.add( "hud.tints.ophanim.purple.wings",	0x8800FF );
 			
 	}
 
