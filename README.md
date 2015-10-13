@@ -5,39 +5,38 @@ An "Ultimate Ability" UI mod for the MMORPG "The Secret World"
    
 What is this?
 -------------
-ElTorqiro_UltimateAbility is a heads-up-display module for tracking the progress of Animus charge, and activating the Ultimate Ability.
+ElTorqiro_UltimateAbility is a customisable Ultimate Ability button.  Feature highlights:
 
-Major Features
---------------
-* integrates an Animus charge meter into a newly designed Ultimate Ability button - the button "fills up" as you charge your Animus
-* option to hide the default in-game Animus charge bar
-* extensive cosmetic options for styling the button just how you want it
+* integrates an Animus charge meter into the button; the meter fills up as your Animus charges, and lights up when full
+* option to hide the default Animus charge bar
+* customisable colours and styles for the various button elements (looks nicer than the default button!)
+* tints the button according to which Ultimate Ability your character has unlocked
+* does not modify or override any game files
 
-Feedback, updates and community forum can be found at https://forums.thesecretworld.com/showthread.php?86011-MOD-ElTorqiro_UltimateAbility
+Join the conversation with feedback, bug reports, and update information on the official TSW forums at https://forums.thesecretworld.com/showthread.php?86011-MOD-ElTorqiro_UltimateAbility
    
    
-User Configuration
-------------------
-The mod provides an interactive on-screen icon which can be used to bring up a configuration panel.  Hover the mouse over the icon for instructions.  If you have Viper's Topbar Information Overload (VTIO) installed, or an equivalent handler, the icon will be available in a VTIO slot.
+Donations
+---------
+I don't accept real-money donations for my mods.  If you would like to show your support, you can do so by sending in-game pax to my character Tufenuf.  I will use it to buy the in-game items I would otherwise have been able to grind out myself, if I weren't spending time writing mods.
+  
+  
+Configuration
+-------------
+The mod includes an on-screen icon which can be clicked to bring up a comprehensive configuration panel.  If you have Viper's Topbar Information Overload (VTIO) installed, or an equivalent handler, the icon will be available in a VTIO slot.
    
-You can also toggle the configuration window with the option ElTorqiro_UltimateAbility_ShowConfigWindow, which can be set via a chat command as follows:
-/setoption ElTorqiro_UltimateAbility_ShowConfigWindow 1
-(1 = open, 0 = closed)
-   
-   
-Known Issues
-------------
-* None yet   
+Manipulating the button and the icon is done via TSW's Gui Edit Mode, which is toggled in the game by clicking the padlock symbol in the top right corner of the screen.  Left-button drags the button, and mouse wheel adjusts scale.  These instructions are repeated in the config window.
   
   
 Installation
 ------------
-Extract the contents of the zip file into: YOUR_TSW_DIRECTORY\Data\Gui\Customized\Flash
-This will add the appropriate directory and put the files in the right place.
-
-Uninstallation
---------------
-Delete the directory: YOUR_TSW_DIRECTORY\Data\Gui\Customized\Flash\ElTorqiro_UltimateAbility
+The mod is released with CurseMod support, so you can use the Curse client to handle adding and removing it from the game.  Manual installation can also be done, as follows:
+  
+Manual Installation
+Ensure the game is closed, then extract only the Flash folder from the zip file into TSW_GAME_FOLDER\Data\Gui\Customized
+  
+Manual Uninstallation
+Ensure the game is closed, then delete the folder TSW_GAME_FOLDER\Data\Gui\Customized\Flash\ElTorqiro_UltimateAbility
   
   
 Source Code

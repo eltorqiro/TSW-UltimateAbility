@@ -186,7 +186,7 @@ class com.ElTorqiro.UltimateAbility.App {
 			}
 		);
 
-		prefs.add( "hud.fullAnimaEnergy.glow.enable", true );
+		prefs.add( "hud.fullAnimaEnergy.glow.enable", false );
 		prefs.add( "hud.fullAnimaEnergy.glow.intensity", 80,
 			function( newValue, oldValue ) {
 				var value:Number = Math.min( newValue, Const.MaxGlowIntensity );

@@ -12,7 +12,7 @@ class com.ElTorqiro.UltimateAbility.Const {
 	public static var AppID:String = "ElTorqiro_UltimateAbility";
 	public static var AppName:String = "UltimateAbility";
 	public static var AppAuthor:String = "ElTorqiro";
-	public static var AppVersion:String = "1.2.0+develop";
+	public static var AppVersion:String = "1.3.0";
 
 	public static var DebugModeDV:String = "ElTorqiro_UltimateAbility_Debug";
 	
